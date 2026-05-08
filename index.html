@@ -1,0 +1,971 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Understanding Houston's FY2027 Budget</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
+<style>
+:root { color-scheme: light;
+  --navy: #1E3A5F; --navy-dark: #14253E; --orange: #C8742A; --red: #A8231A; --green: #2A6B3F;
+  --grey: #6B6B6B; --light-grey: #F5F5F5; --bg: #FAFAFA; --card-bg: #FFFFFF;
+  --border: #E0E0E0; --text: #1A1A1A; --text-soft: #4A4A4A;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; font-size: 16px; }
+.container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+a { color: var(--navy); }
+
+/* Header */
+.banner { background: var(--orange); color: #fff; padding: 10px 20px; text-align: center; font-weight: 600; font-size: 14px; }
+.banner a { color: #fff; text-decoration: underline; }
+header.hero { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%); color: #fff; padding: 60px 0 50px; }
+header.hero h1 { font-size: 38px; font-weight: 800; line-height: 1.15; margin-bottom: 12px; }
+header.hero .subtitle { font-size: 18px; opacity: 0.85; margin-bottom: 30px; }
+header.hero .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 30px; }
+header.hero .stat { background: rgba(255,255,255,0.07); padding: 18px; border-radius: 8px; border-left: 3px solid var(--orange); }
+header.hero .stat .num { font-size: 28px; font-weight: 800; line-height: 1; margin-bottom: 6px; }
+header.hero .stat .label { font-size: 13px; opacity: 0.85; }
+
+/* Sticky nav */
+nav.sticky { background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
+nav.sticky .container { display: flex; gap: 6px; overflow-x: auto; padding: 0 20px; scrollbar-width: thin; }
+nav.sticky button { background: none; border: none; color: var(--text-soft); padding: 14px 16px; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent; transition: all 0.15s; font-family: inherit; }
+nav.sticky button:hover { color: var(--navy); }
+nav.sticky button.active { color: var(--navy); border-bottom-color: var(--orange); }
+
+/* Sections */
+section { padding: 50px 0; }
+section.alt { background: var(--card-bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+h2 { font-size: 28px; font-weight: 800; color: var(--navy); margin-bottom: 8px; line-height: 1.2; }
+h3 { font-size: 19px; font-weight: 700; color: var(--navy); margin: 24px 0 8px; }
+h4 { font-size: 16px; font-weight: 700; color: var(--navy); margin: 16px 0 6px; }
+.section-intro { font-size: 16px; color: var(--text-soft); margin-bottom: 24px; max-width: 820px; }
+
+/* Concern cards */
+.concerns-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 20px; }
+.concern { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px; cursor: pointer; transition: all 0.15s; position: relative; }
+.concern:hover { border-color: var(--orange); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+.concern.expanded { grid-column: 1 / -1; cursor: default; }
+.concern.expanded:hover { transform: none; }
+.concern .num { display: inline-block; width: 28px; height: 28px; background: var(--navy); color: #fff; border-radius: 50%; text-align: center; line-height: 28px; font-weight: 700; font-size: 14px; margin-bottom: 10px; }
+.concern h3 { margin: 0 0 8px; font-size: 17px; }
+.concern .verdict-tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
+.tag-validated { background: #FEE; color: var(--red); }
+.tag-acute { background: #FEE; color: var(--red); }
+.tag-skeptical { background: #FFF4E5; color: #B8590E; }
+.tag-regressive { background: #FEE; color: var(--red); }
+.tag-contested { background: #F8E5E2; color: #8B1A12; }
+.concern .summary { font-size: 14px; color: var(--text-soft); }
+.concern .detail { display: none; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border); font-size: 15px; line-height: 1.65; }
+.concern.expanded .detail { display: block; }
+.concern.expanded .expand-prompt { display: none; }
+.concern .expand-prompt { font-size: 12px; color: var(--orange); font-weight: 600; margin-top: 10px; }
+.concern .close-btn { position: absolute; top: 16px; right: 16px; background: var(--light-grey); border: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; display: none; font-size: 16px; line-height: 1; }
+.concern.expanded .close-btn { display: block; }
+.concern .detail h4 { color: var(--navy); margin-top: 14px; }
+.concern .detail ul { margin: 8px 0 8px 20px; }
+.concern .detail blockquote { border-left: 3px solid var(--orange); padding: 8px 14px; margin: 12px 0; background: var(--light-grey); font-style: italic; color: var(--text-soft); }
+.concern .detail strong { color: var(--text); }
+
+/* Charts */
+.chart-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+@media (min-width: 700px) { .chart-grid { grid-template-columns: 1fr 1fr; } .chart-grid .full { grid-column: 1 / -1; } }
+.chart-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+.chart-card h3 { margin-top: 0; }
+.chart-card .caption { font-size: 13px; color: var(--text-soft); margin-top: 12px; line-height: 1.5; font-style: italic; }
+.chart-wrapper { position: relative; height: 280px; }
+.chart-wrapper.tall { height: 360px; }
+
+/* Pattern beneath - tabs */
+.pattern-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.pattern-tabs button { background: var(--card-bg); border: 1px solid var(--border); color: var(--text-soft); padding: 10px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600; font-family: inherit; transition: all 0.15s; }
+.pattern-tabs button:hover { border-color: var(--orange); color: var(--navy); }
+.pattern-tabs button.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+.pattern-content { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 24px; min-height: 240px; }
+.pattern-pane { display: none; }
+.pattern-pane.active { display: block; animation: fadeIn 0.2s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Quote cards */
+.quote-card { background: var(--card-bg); border-left: 4px solid var(--orange); padding: 18px 20px; margin: 14px 0; border-radius: 0 8px 8px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.quote-card .speaker { font-weight: 700; color: var(--navy); font-size: 13px; margin-bottom: 6px; }
+.quote-card .quote { font-style: italic; color: var(--text); font-size: 15px; line-height: 1.6; }
+.quote-card .context { font-size: 13px; color: var(--text-soft); margin-top: 8px; }
+
+/* Workshop schedule */
+.schedule-list { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.schedule-row { display: grid; grid-template-columns: 160px 1fr 200px; gap: 20px; padding: 14px 18px; border-bottom: 1px solid var(--border); align-items: center; font-size: 14px; }
+.schedule-row:last-child { border-bottom: none; }
+.schedule-row.highlight { background: #FFF8EE; }
+.schedule-row .date { font-weight: 700; color: var(--navy); }
+.schedule-row .event { color: var(--text); }
+.schedule-row .action { color: var(--text-soft); font-size: 13px; }
+@media (max-width: 700px) { .schedule-row { grid-template-columns: 1fr; gap: 6px; } }
+
+/* Workshop questions */
+.q-filter { display: flex; gap: 8px; flex-wrap: wrap; margin: 20px 0 16px; align-items: center; }
+.q-filter span { font-size: 13px; color: var(--text-soft); margin-right: 4px; }
+.q-filter button { background: var(--card-bg); border: 1px solid var(--border); padding: 6px 12px; border-radius: 16px; font-size: 13px; cursor: pointer; font-family: inherit; color: var(--text-soft); }
+.q-filter button:hover { border-color: var(--orange); }
+.q-filter button.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+.questions-list { display: grid; gap: 10px; }
+.q-item { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; transition: all 0.15s; }
+.q-item:hover { border-color: var(--orange); }
+.q-item .dept { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 4px; background: var(--navy); color: #fff; margin-bottom: 6px; }
+.q-item .question { font-size: 14px; line-height: 1.55; }
+.q-item .source { font-size: 12px; color: var(--text-soft); margin-top: 6px; font-style: italic; }
+
+/* Calculator */
+.calc { background: linear-gradient(135deg, #FFF8EE 0%, #FFEDD3 100%); border: 1px solid #F0DBB5; border-radius: 10px; padding: 24px; margin-top: 20px; }
+.calc-input { display: grid; gap: 12px; max-width: 480px; }
+.calc-input label { display: block; font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+.calc-input input { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px; font-size: 16px; font-family: inherit; }
+.calc-input input:focus { outline: 2px solid var(--orange); outline-offset: -1px; }
+.calc-result { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 18px; margin-top: 16px; }
+.calc-line { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed var(--border); font-size: 14px; }
+.calc-line:last-child { border-bottom: none; padding-top: 12px; margin-top: 4px; border-top: 2px solid var(--navy); font-weight: 700; font-size: 16px; }
+.calc-line.delta { color: var(--red); font-weight: 600; }
+
+/* Action items */
+.action-tier { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 22px 24px; margin-bottom: 16px; }
+.action-tier h3 { margin-top: 0; display: flex; align-items: center; gap: 10px; }
+.action-tier h3 .tier-badge { font-size: 11px; padding: 3px 9px; border-radius: 4px; background: var(--navy); color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+.action-tier ul { margin-left: 20px; margin-top: 8px; }
+.action-tier li { margin-bottom: 8px; font-size: 14.5px; line-height: 1.6; }
+
+/* Footer */
+footer { background: var(--navy-dark); color: rgba(255,255,255,0.85); padding: 50px 0 40px; font-size: 14px; }
+footer h3 { color: #fff; margin-bottom: 12px; }
+footer details { margin-bottom: 8px; }
+footer summary { cursor: pointer; color: var(--orange); font-weight: 600; padding: 4px 0; }
+footer summary:hover { color: #fff; }
+footer .source-list { margin-top: 8px; padding-left: 12px; }
+footer .source-list li { margin: 4px 0; font-size: 13px; opacity: 0.85; }
+footer .footnote { margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; opacity: 0.6; }
+
+/* Inline elements */
+.callout { background: #FFF8EE; border-left: 4px solid var(--orange); padding: 14px 18px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+.callout strong { color: var(--navy); }
+.warning { background: #FFE6E2; border-left: 4px solid var(--red); padding: 14px 18px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+.success { background: #E5F4EA; border-left: 4px solid var(--green); padding: 14px 18px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+
+p { margin-bottom: 12px; }
+ul { margin: 8px 0 12px 22px; }
+li { margin-bottom: 6px; line-height: 1.6; }
+
+@media (max-width: 700px) {
+  header.hero h1 { font-size: 28px; }
+  header.hero { padding: 40px 0 30px; }
+  section { padding: 36px 0; }
+  h2 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<div class="banner">
+  📅 Budget workshops May 12–19 • Public hearing May 20 (9am) • Final vote June 3 — <a href="#workshops">See workshop guide</a>
+</div>
+
+<header class="hero">
+  <div class="container">
+    <h1>Understanding Houston's FY2027 Budget</h1>
+    <div class="subtitle">A plain-English evaluation, with sources, for the budget workshops ahead.</div>
+    <p style="max-width: 820px; opacity: 0.92;">
+      Houston's structural budget deficit grows from $76M (FY26) to a projected $463M by FY30. The Mayor's FY27 plan adds a $5/month trash fee and a 5% utility right-of-way fee, holds the property tax rate flat, and leaves the long-term trajectory intact. Two of three rating agencies have placed Houston on negative credit watch. Hurricane reserves are the lowest among peer cities.
+    </p>
+    <div class="stats">
+      <div class="stat"><div class="num">$76M → $463M</div><div class="label">Projected deficit growth FY26 → FY30</div></div>
+      <div class="stat"><div class="num">10.4%</div><div class="label">Current GF reserve % (vs. 16.7% GFOA best practice)</div></div>
+      <div class="stat"><div class="num">2 of 3</div><div class="label">Rating agencies on negative outlook</div></div>
+      <div class="stat"><div class="num">$3.3M</div><div class="label">Annual subsidy to HOA private trash (88% to wealthiest 2 districts)</div></div>
+    </div>
+  </div>
+</header>
+
+<nav class="sticky">
+  <div class="container">
+    <button data-target="concerns" class="active">5 Concerns</button>
+    <button data-target="trajectory">Budget Trajectory</button>
+    <button data-target="patterns">Patterns Beneath</button>
+    <button data-target="hearing">May 7 Hearing</button>
+    <button data-target="calculator">Your Bill</button>
+    <button data-target="workshops">Workshop Guide</button>
+    <button data-target="action">Take Action</button>
+    <button data-target="about">Sources</button>
+  </div>
+</nav>
+
+<section id="concerns">
+  <div class="container">
+    <h2>Five Resident Concerns at a Glance</h2>
+    <p class="section-intro">Click any concern card to expand the full evaluation. Each is sourced and tied to specific budget line items, council votes, or rating agency thresholds.</p>
+    <div class="concerns-grid" id="concernsGrid">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</section>
+
+<section id="trajectory" class="alt">
+  <div class="container">
+    <h2>Budget Trajectory Dashboard</h2>
+    <p class="section-intro">Six interactive views of how Houston got here — and where the FY27 plan lands relative to peer cities, GFOA best practice, and the structural deficit timeline.</p>
+    <div class="chart-grid">
+      <div class="chart-card full">
+        <h3>1. General Fund balance — record high to record drop</h3>
+        <div class="chart-wrapper tall"><canvas id="chartFundBalance"></canvas></div>
+        <div class="caption">Houston had its highest-ever reserves in FY24 ($567M, 23.4% of expenditures), then experienced its largest single-year drop in FY25 and is on track for the second-largest drop in FY26. The dashed projection assumes status-quo trajectory.</div>
+      </div>
+      <div class="chart-card">
+        <h3>2. Reserves vs. peer cities</h3>
+        <div class="chart-wrapper"><canvas id="chartReserves"></canvas></div>
+        <div class="caption">Houston requires roughly half the GFOA-recommended reserve. Lowest among peer cities surveyed.</div>
+      </div>
+      <div class="chart-card">
+        <h3>3. Police / Fire OT — the doubling-down pattern</h3>
+        <div class="chart-wrapper"><canvas id="chartOT"></canvas></div>
+        <div class="caption">FY26 budget used essentially the same failed assumption as FY25. By March 2026, FY26 was tracking $60M+ over again.</div>
+      </div>
+      <div class="chart-card">
+        <h3>4. Five-year deficit projection vs. fee package</h3>
+        <div class="chart-wrapper"><canvas id="chartDeficit"></canvas></div>
+        <div class="caption">The Mayor's $130M FY27 fee package closes about a third of the FY27 gap and a smaller share of out-year gaps.</div>
+      </div>
+      <div class="chart-card">
+        <h3>5. Solid Waste service crisis</h3>
+        <div class="chart-wrapper"><canvas id="chartService"></canvas></div>
+        <div class="caption">Recycling improved with $26M for 62 new trucks. Heavy trash and missed garbage have continued to climb.</div>
+      </div>
+      <div class="chart-card full">
+        <h3>6. General Fund composition (FY26 adopted)</h3>
+        <div class="chart-wrapper" style="height: 320px;"><canvas id="chartGF"></canvas></div>
+        <div class="caption">Police, Fire, and Debt Service consume more than 75% of all General Fund spending. Twenty-one other departments — including Solid Waste, Parks, Libraries, Public Health — share the remaining 25%.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="patterns">
+  <div class="container">
+    <h2>The Pattern Beneath the Concerns</h2>
+    <p class="section-intro">The five visible concerns are symptoms. Underneath, four patterns are doing the structural work — and they're how the same problems keep recurring across administrations.</p>
+    <div class="pattern-tabs" id="patternTabs">
+      <button data-pane="maintenance" class="active">Deferred Maintenance</button>
+      <button data-pane="workforce">Workforce Capacity</button>
+      <button data-pane="privatization">Soft Privatization</button>
+      <button data-pane="transparency">Transparency</button>
+    </div>
+    <div class="pattern-content">
+      <div class="pattern-pane active" id="pane-maintenance">
+        <h3>Two decades of deferring infrastructure maintenance</h3>
+        <p>The single most damaging fact in the dataset, from the Baker Institute's October 2023 deep dive:</p>
+        <blockquote style="border-left: 3px solid var(--orange); padding: 10px 16px; margin: 12px 0; background: var(--light-grey); font-style: italic; color: var(--text-soft);">
+          "The pay-as-you-go funding mechanism for street and drainage projects approved by voters in 2010 has failed to keep pace with depreciation and maintenance expenses. ... cumulative reduction of as much as $420 million for street and drainage projects from 2012 to 2023. <strong>And the City has never spent more than half of the $650 million per year that Public Works officials have estimated should be spent on such projects.</strong>"
+        </blockquote>
+        <p><strong>Translated:</strong> Houston's own engineering estimate is $650M/year needed for streets and drainage. The City has consistently spent less than $325M.</p>
+        <h4>The transfer station case study (Click2Houston, May 4, 2026)</h4>
+        <p>Three of five Solid Waste transfer stations are non-functional, including one with <em>"giant holes in the roof, flocks of birds, and wild hogs"</em> per Mayor's COO Stephen David. The cause: a previous administration allowed Solid Waste to stop contributing to the Maintenance and Renewal Fund. SWD then cut facility maintenance first when squeezed.</p>
+        <p>Cost: $20–25M/year in foregone revenue (Houston could charge third-party haulers $75/ton if it ran its own stations). Plus chronic overtime from longer routes.</p>
+        <h4>Plus a $760M facilities backlog (May 7, 2026 BFA hearing)</h4>
+        <p>Vice Mayor Pro Tem Peck quoted the FY26 figure: <strong>$760 million in deferred facility maintenance, projected $1.4 billion over five years.</strong> The FY27 budget transfers $48.3M to the Maintenance and Renewal Fund — funding the backlog at roughly 6% per year.</p>
+      </div>
+      <div class="pattern-pane" id="pane-workforce">
+        <h3>Workforce capacity erosion</h3>
+        <p>Mayor Whitmire's response to the structural deficit included shedding more than 10% of the city workforce.</p>
+        <ul>
+          <li><strong>March 10, 2025:</strong> Hiring freeze across all departments except police and fire</li>
+          <li><strong>March 14, 2025:</strong> Voluntary retirement offered to <strong>2,700 employees</strong> (>10% of the workforce)</li>
+          <li><strong>~700 vacated positions held vacant</strong>, including 40 in Parks and 27 in Libraries</li>
+          <li><strong>Whitmire's framing:</strong> <em>"We have too many city employees for a city our size."</em></li>
+        </ul>
+        <h4>Solid Waste — the visible operational consequence</h4>
+        <ul>
+          <li>Workforce: <strong>435 (Jan 2025) → 395 (Oct 2025)</strong> — 9.2% cut in 9 months</li>
+          <li><strong>16 of 40 SWD voluntary retirees were truck drivers or operators</strong> — 40% of the buyouts hit operationally critical positions</li>
+          <li>SWD budget cut by $5.9M annually</li>
+          <li>Half the truck fleet regularly out of service</li>
+          <li>311 missed-recycling complaints quadrupled (4,000 → 15,000 in same 12-week window YoY)</li>
+        </ul>
+        <p><strong>SWD Director Larius Hassen's testimony</strong>: voluntary retirement <em>"almost crippled"</em> one service area. Director said the department needs <strong>70 more trucks and 30 more staff</strong>.</p>
+        <p>The on-demand heavy trash pilot was placed <em>"on hold until further notice"</em> in March 2026 — the same week it was supposed to launch.</p>
+      </div>
+      <div class="pattern-pane" id="pane-privatization">
+        <h3>Soft privatization and service degradation</h3>
+        <p>Mayor Whitmire publicly opposes park privatization. Quote from 2024: <em>"strongly against parks charging fees to the public."</em> The actual budget actions tell a more complicated story:</p>
+        <ul>
+          <li><strong>Parks budget cut by $4M+</strong> in FY26</li>
+          <li><strong>Libraries cut by ~$2M</strong> in FY26</li>
+          <li><strong>67 vacated positions in parks and libraries unfilled</strong> (40 parks + 27 libraries)</li>
+          <li><strong>"Let's Play Houston" public-private partnership</strong> — $60M for park upgrades funded by a private foundation rather than the City</li>
+          <li><strong>Moody Park and Keith-Wiess Park operations transferred to Harris County Precinct 2</strong> in 2026</li>
+          <li><strong>Quality of Life budget category reduced by 16% in FY27</strong> (per FY27 budget chart, flagged in May 7 public testimony) — the only category in the priority chart that decreases</li>
+        </ul>
+        <p><strong>This is <em>de facto</em> privatization-by-attrition.</strong> Cut city funding → leave positions unfilled → replace direct city operations with public-private partnerships → transfer responsibility to other governmental units. The end result is similar to formal privatization without triggering the political backlash.</p>
+        <h4>Stephen David's "name their customers" admission (May 7, 2026)</h4>
+        <p>When Council Member Davis asked about managed competition for trash, Mayor's COO Stephen David explained why it has stalled:</p>
+        <blockquote style="border-left: 3px solid var(--orange); padding: 10px 16px; margin: 12px 0; background: var(--light-grey); font-style: italic; color: var(--text-soft);">
+          "They all wanted to name their customers. They wanted to pick the neighborhoods that were favorable to them on road width, on lack of ditches, on different types of stuff."
+        </blockquote>
+        <p>Direct on-the-record confirmation that private trash haulers cherry-pick wealthier, easier-to-serve neighborhoods — exactly the equity dynamic the HOA subsidy reinforces.</p>
+      </div>
+      <div class="pattern-pane" id="pane-transparency">
+        <h3>Transparency concerns</h3>
+        <p>Several specific events in the past year fit a pattern of reduced fiscal transparency:</p>
+        <ul>
+          <li><strong>The $60,000 Mayor podcast</strong> ("901 Bagby") averaging fewer than 160 views per episode; three ethics complaints filed (Texas Ethics Commission, Houston Inspector General, Controller's waste/fraud/abuse division)</li>
+          <li><strong>Drainage settlement uploaded during the meeting</strong> rather than published in advance (May 2025) — Council Member Kamin objected: <em>"to not give the public sufficient time causes me heartburn"</em></li>
+          <li><strong>Mayor's public attacks on Hollins's MFR process:</strong> <em>"abuse my generosity of allowing him to do personal privileges"</em> (January 2026)</li>
+          <li><strong>The Austin Street bike lane removal (April 2025)</strong> — Houston Public Works ripped out protected bike lanes installed using $2 million from Harris County, discovered only via Texas Public Information Act request</li>
+          <li><strong>Letters of support obtained before budget published</strong> (confirmed at May 7 hearing): Pollard pressed Stephen David, who admitted external advocacy groups were briefed on framing and provided supportive letters before the actual document was released</li>
+          <li><strong>Burns and McDonald cost-of-service study released same day workshops scheduled to begin</strong> — six days before department workshops, limiting practical review time</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="hearing" class="alt">
+  <div class="container">
+    <h2>The May 7, 2026 BFA Hearing — Key Moments</h2>
+    <p class="section-intro">The Budget and Fiscal Affairs Committee heard the FY27 overview from Finance Director Dubowski. Five exchanges put the report's analytical findings on the public record.</p>
+    <div class="quote-card">
+      <div class="speaker">Mayor Pro Tem Castex Tatum → Director Dubowski (HOA subsidy continues)</div>
+      <div class="quote">"And will the $6 rebates still remain intact for people with private trash?" — "Yes, that's part of the plan. Part of the budget for the $6 rebates to remain intact."</div>
+      <div class="context">The $6/month subsidy to 47,000 HOA-served households (88% concentrated in Districts E and G) continues alongside the new $5 fee on city-served households. On the record from the Mayor's Finance Director.</div>
+    </div>
+    <div class="quote-card">
+      <div class="speaker">Council Member Pollard → COO Stephen David (CUS surplus)</div>
+      <div class="quote">"It's like having money in my own account today and saying, 'I don't want to use this. I'm going to go put it on credit or debt.'"</div>
+      <div class="context">The Combined Utility System has 550 days of cash on hand against a 300-day policy minimum, and 2.15x debt service coverage against a 1.25x requirement. Pollard's question: why are CUS rates not being reduced rather than redirected to the General Fund? David refused to claim there's no surplus — "That analysis is done during a rate study, which we're in the middle of right now."</div>
+    </div>
+    <div class="quote-card">
+      <div class="speaker">Council Member Thomas → COO Stephen David ($25 cap)</div>
+      <div class="quote">Thomas: "Is there a promise from the administration that we will not have to go back to Houstonians and say, 'Ah, I know it's $25, but we've done another study and now it's $35'?" — David: "Mayor Whitmire's commitment is that we're not going above $25." Thomas: "Unless we do a rate study." David: (silence — interpreted as confirmation)</div>
+      <div class="context">The $25 trash-fee cap holds <strong>only during Whitmire's administration</strong> and <strong>only absent a rate study</strong>. Worth tracking whether this commitment makes it into the final ordinance text on June 3.</div>
+    </div>
+    <div class="quote-card">
+      <div class="speaker">Council Member Pollard (the penny challenge)</div>
+      <div class="quote">"We don't want to raise the property tax cap by a penny so that the city can get an additional 20 million dollars when the mayor consistently says that the city is broke and that we need to find revenue sources... We can't say that it's a challenge for us and then at the same time don't meet the max of the cap."</div>
+      <div class="context">The proposed FY27 budget collects $20M <em>below</em> the property tax cap legally available under Prop 1/H. The cleanest first move toward fiscal honesty would be to raise the rate by one cent before imposing $130M+ in new fees.</div>
+    </div>
+    <div class="quote-card">
+      <div class="speaker">Ruben Garza, Strong Towns Houston (public testimony)</div>
+      <div class="quote">"Houston's net financial position as of '24 is about negative $14 billion."</div>
+      <div class="context">Strong Towns proposed a Transportation Utility Fee structured around right-of-way <em>consumption</em> (frontage, impervious cover, curb cuts) — would generate ~$200M/year vs. the proposed $100M ROW fee, and would be more progressive (denser multi-family neighborhoods would pay less than sprawling single-family).</div>
+    </div>
+  </div>
+</section>
+
+<section id="calculator">
+  <div class="container">
+    <h2>Calculate Your Household Bill Impact</h2>
+    <p class="section-intro">The Mayor's framing is "no property tax rate increase." Your total household bills will still rise. Estimate your specific exposure.</p>
+    <div class="calc">
+      <div class="calc-input">
+        <div>
+          <label>Your home's appraised value</label>
+          <input type="number" id="homeValue" value="320000" min="0" step="10000">
+        </div>
+        <div>
+          <label>Monthly water/sewer bill (current)</label>
+          <input type="number" id="waterBill" value="80" min="0" step="5">
+        </div>
+        <div>
+          <label>Monthly electric bill (CenterPoint)</label>
+          <input type="number" id="electricBill" value="180" min="0" step="10">
+        </div>
+        <div>
+          <label>Monthly internet/phone (AT&T)</label>
+          <input type="number" id="phoneBill" value="100" min="0" step="10">
+        </div>
+        <div>
+          <label>Monthly cable (Comcast)</label>
+          <input type="number" id="cableBill" value="100" min="0" step="10">
+        </div>
+        <div>
+          <label>Trash service: city or private HOA?</label>
+          <select id="trashService" style="width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px; font-size: 16px; font-family: inherit;">
+            <option value="city">City service (will pay new fee)</option>
+            <option value="hoa">HOA / private (gets $6/mo subsidy)</option>
+          </select>
+        </div>
+      </div>
+      <div class="calc-result" id="calcResult">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="workshops" class="alt">
+  <div class="container">
+    <h2>Budget Workshop Survival Guide</h2>
+    <p class="section-intro">The FY27 budget moves through Council on a compressed schedule between May 7 and June 3, 2026. Use this guide to engage substantively at workshops, public hearing, and final vote.</p>
+
+    <h3>The schedule</h3>
+    <div class="schedule-list">
+      <div class="schedule-row"><div class="date">May 7 (past)</div><div class="event">Five-Year Forecast and FY27 Budget Overview presented to BFA</div><div class="action">Transcript & slides available</div></div>
+      <div class="schedule-row highlight"><div class="date">May 12–19</div><div class="event"><strong>Department budget workshops</strong> at BFA Committee</div><div class="action">Submit questions via SharePoint</div></div>
+      <div class="schedule-row"><div class="date">May 16, 10am Sat</div><div class="event">In-person budget town hall at Fondy Recreation Center</div><div class="action">Attend; testify if signed up</div></div>
+      <div class="schedule-row highlight"><div class="date">May 20, 9am</div><div class="event"><strong>Public hearing</strong> at City Council meeting (chambers)</div><div class="action">Sign up online by 5pm May 19</div></div>
+      <div class="schedule-row"><div class="date">May 20, 6pm</div><div class="event">Virtual budget town hall (online)</div><div class="action">Attend remotely</div></div>
+      <div class="schedule-row highlight"><div class="date">May 27</div><div class="event">Council member amendment deadline</div><div class="action">Contact council member by May 26</div></div>
+      <div class="schedule-row"><div class="date">June 3</div><div class="event"><strong>Final Council vote on FY27 Budget Ordinance</strong></div><div class="action">Last public testimony opportunity</div></div>
+    </div>
+
+    <h3 style="margin-top: 36px;">Priority questions by department</h3>
+    <p style="font-size: 14px; color: var(--text-soft); margin-bottom: 12px;">Filter by department. Each question is sourced and tied to a documented concern in the report.</p>
+    <div class="q-filter" id="qFilter">
+      <span>Filter:</span>
+      <button data-filter="all" class="active">All</button>
+      <button data-filter="HPW">Public Works</button>
+      <button data-filter="SWM">Solid Waste</button>
+      <button data-filter="Mayor">Mayor's Office</button>
+      <button data-filter="Finance">Finance</button>
+      <button data-filter="QoL">Health/Library/Parks</button>
+    </div>
+    <div class="questions-list" id="questionsList"><!-- Populated by JS --></div>
+
+    <div class="callout" style="margin-top: 24px;">
+      <strong>How to submit questions:</strong> council members can upload to SharePoint directly. Public residents should contact their <strong>district council member's office</strong> or an <strong>at-large council member</strong> (Twila Carter, Willie Davis, Julian Ramirez, Alejandra Salinas, Sallie Alcorn) and request the question be submitted on their behalf. <strong>Earlier submissions get more thorough responses.</strong>
+    </div>
+
+    <h3 style="margin-top: 32px;">Public testimony — using your time effectively</h3>
+    <p>The May 20 public hearing gives 60 seconds to 3 minutes per speaker. Effective testimony follows this structure:</p>
+    <ol style="margin-left: 22px;">
+      <li><strong>Identify yourself, district, and specific concern</strong></li>
+      <li><strong>Cite a specific document or figure</strong> — page number, dollar amount</li>
+      <li><strong>Make one specific, actionable ask</strong> — an amendment, a question, an exemption</li>
+      <li><strong>Cite the precedent or parallel</strong></li>
+      <li><strong>End with the practical impact</strong> on you or your neighborhood</li>
+    </ol>
+    <p><strong>Generic outrage is ineffective.</strong> Specific, sourced, time-bounded statements have a documented track record of influencing council member positions.</p>
+  </div>
+</section>
+
+<section id="action">
+  <div class="container">
+    <h2>What You Can Do</h2>
+    <p class="section-intro">The standard advice — vote, attend public hearings, contact your council member — is true but incomplete. Sustained, specific, evidence-based attention is what changes municipal behavior.</p>
+
+    <div class="action-tier">
+      <h3><span class="tier-badge">This week</span> Immediate actions</h3>
+      <ul>
+        <li><strong>File specific Texas Public Information Act requests.</strong> The bike lane scandal broke this way. High-value requests: every Mayor's-office contract above $25,000 in FY26; transfer station maintenance records 2014–2025; department vacancy reports; the unredacted EY Efficiency Study.</li>
+        <li><strong>Conduct a neighborhood deferred maintenance audit.</strong> Photograph street conditions, water main repairs, broken sidewalks, abandoned heavy trash. Date everything. File 311 requests. Submit to your council member with a request for written response.</li>
+        <li><strong>Verify one Mayor claim per week against the data.</strong> When the spokesperson says 311 numbers are "duplicate calls," check the published 311 dashboard. When the City says "no tax increase," compute your actual increase across utility, trash, and water bills.</li>
+      </ul>
+    </div>
+
+    <div class="action-tier">
+      <h3><span class="tier-badge">Ongoing</span> Sustained engagement</h3>
+      <ul>
+        <li><strong>Build a personal household-bill ledger.</strong> Track every City charge — property tax, water/sewer, trash fee, ROW pass-throughs. Report your annual increase publicly. Single most effective rebuttal to "no tax increase."</li>
+        <li><strong>Track your council member's voting record on fiscal items.</strong> The 9-7 stormwater-for-blight vote, the 11-3 property tax rate vote, future trash-fee and ROW-fee votes. Specific accountability beats generic outrage.</li>
+        <li><strong>Use rating agencies as objective benchmarks.</strong> Fitch's 15% reserve threshold and S&P's structural-balance criterion are written down. They were designed for risk assessment, not political debate — which makes them useful.</li>
+        <li><strong>Show up to BFA Committee meetings, not just full Council.</strong> The substantive fights happen at BFA, where the granular questions get asked.</li>
+        <li><strong>Cross-reference Council statements against ACFRs.</strong> The unrestricted net position (the meaningful number) is in the audited financial reports. The Mayor cannot dispute audited statements.</li>
+      </ul>
+    </div>
+
+    <div class="action-tier">
+      <h3><span class="tier-badge">Longer arc</span> Structural change</h3>
+      <ul>
+        <li><strong>Build a resident-fiscal-literacy network.</strong> Partner with libraries, HISD adult-ed, and community colleges. A counter-podcast to the Mayor's $60K one — done for free — would be a fitting cultural response.</li>
+        <li><strong>Coordinate with cross-coalition partners.</strong> BikeHouston (broke the bike lane story); Northeast Action Collective + West Street Recovery (drainage); Houston Progressive Caucus (podcast ethics complaints); Greater Houston Partnership (Baker Institute deep dive); council district civic clubs.</li>
+        <li><strong>Push for an independent municipal fiscal monitor.</strong> Chicago has the Civic Federation. Houston has nothing equivalent. <em>A truly nonpartisan municipal-fiscal watchdog is a missing institution in Houston.</em></li>
+        <li><strong>Press for participatory budgeting</strong> on a small percentage of capital spending — even 2% of CIP, allocated by neighborhood-level resident vote.</li>
+      </ul>
+    </div>
+
+    <div class="action-tier">
+      <h3><span class="tier-badge">Outside-the-box</span> Creative ideas</h3>
+      <ul>
+        <li><strong>The "Strong Towns Walk."</strong> Walk a block. Inventory infrastructure. Estimate replacement cost. Calculate what the block pays in property tax. Publish the math.</li>
+        <li><strong>The "Where does my $5 go?" project.</strong> Crowdsource quarterly: which households got new trucks? Did your route get more reliable? You're running a parallel SWD performance audit.</li>
+        <li><strong>Houston Pension Watch.</strong> A volunteer-run tracker for HMEPS, HPOPS, and HFRRF — pulling annual reports, flagging contributions outside the corridor.</li>
+        <li><strong>The FY27 fee impact map.</strong> Crowdsource a map of total household bill increases by census tract. The regressivity story will become visible.</li>
+        <li><strong>Civic data hackathon.</strong> The City's Open Finance portal has structured data almost no one mines. Convert what the City already publishes into civic infrastructure residents can use.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer id="about">
+  <div class="container">
+    <h3>About this report</h3>
+    <p>This evaluation translates Houston's FY2027 proposed budget into plain English with eight specific resident concerns examined against primary sources. It is companion to a 36-page analytical report.</p>
+    <details>
+      <summary>Primary government sources</summary>
+      <ul class="source-list">
+        <li>Mayor's FY2027 Proposed Budget (May 5, 2026), Five-Year Plan, Trends document, FY27 raw line-item Excel data (32,121 line items)</li>
+        <li>Houston ACFRs FY18–FY25 (audited)</li>
+        <li>Houston Monthly Financial Reports — 39 reports across FY23, FY24, FY25, and FY26 through March</li>
+        <li>HMEPS, HPOPS, HFRRF Annual Reports</li>
+        <li>HPOU Contract Overview, HPFFA Settlement, EY Efficiency Study Final Report</li>
+        <li>Mayor's Office press release on stormwater-for-blight allocation (Jan 7, 2026)</li>
+        <li>Houston FY26, FY25, FY24, FY23 Budget Ordinances</li>
+        <li>Burns and McDonald Cost-of-Service Study (May 7, 2026)</li>
+      </ul>
+    </details>
+    <details>
+      <summary>Controller outputs</summary>
+      <ul class="source-list">
+        <li>"Ten Hard Truths About Houston's Proposed FY2026 Budget" (Hollins, May 27, 2025)</li>
+        <li>"Weathering the Storm: Houston's Financial Preparedness for Natural Disasters" (Hollins, September 2, 2025)</li>
+        <li>FY2026 Budget Town Hall presentation (March 25, 2026)</li>
+      </ul>
+    </details>
+    <details>
+      <summary>Rating agency actions</summary>
+      <ul class="source-list">
+        <li>S&P Global Ratings: "Houston GO Debt Rating Outlook Revised To Negative" (July 1, 2024)</li>
+        <li>Fitch Ratings: Houston GO IDR negative outlook revision (September 2024)</li>
+        <li>Moody's Ratings: Aa3 stable affirmation (2024)</li>
+      </ul>
+    </details>
+    <details>
+      <summary>Independent / academic / press</summary>
+      <ul class="source-list">
+        <li>Baker Institute (Rice University): "Why Property Tax Caps Are Not to Blame for Houston's Budget Deficit" + "State of the City's Finances – A Deep Dive into the Fiscal Issues Facing the City"</li>
+        <li>Strong Towns: "Here's the Real Reason Houston Is Going Broke"</li>
+        <li>Bond Buyer reporting (multiple articles, 2024–2026)</li>
+        <li>Houston Public Media, Houston Landing, Texas Scorecard, KHOU, ABC13, Click2Houston, Fox 26, Axios Houston, Houston Chronicle</li>
+        <li>FEMA Public Assistance Program Delivery Guide; NOAA disaster cost data; Houston Disaster Recovery 2024 Action Plan; HUD CDBG-DR allocation documents</li>
+        <li>City of Houston BFA Committee hearing transcript, May 7, 2026</li>
+      </ul>
+    </details>
+    <div class="footnote">
+      Houston is the cleanest shirt in the laundry basket (per Strong Towns) — but it's still a dirty shirt, and dirty shirts only get clean if someone washes them.
+    </div>
+  </div>
+</footer>
+
+<script>
+// ============================================================
+// CONCERN DATA
+// ============================================================
+const concerns = [
+  {
+    num: 1,
+    title: "Convention Center & HOT taxes",
+    verdict: "VALIDATED",
+    tagClass: "tag-validated",
+    summary: "$1.43B in convention bonds with thin coverage on subordinate tranches; HOT already $15.7M short.",
+    detail: `
+      <h4>What's being issued</h4>
+      <ul>
+        <li>$200M Series A + $75M Series B (senior, hotel tax-backed) — S&P upgraded to AA-minus stable</li>
+        <li>$1.05B Series C + $100M Series D (subordinate liens) — debt service coverage of <strong>1.24x for Series C and 1.09x for Series D</strong></li>
+        <li>Hotel Occupancy Tax already <strong>$15.7M short</strong> in March 2026 monthly report — before FIFA</li>
+        <li>Houston is competing with Dallas ($1.5B), Austin ($1.6B), San Antonio ($750M+), Fort Worth ($541M) simultaneously</li>
+      </ul>
+      <h4>Why this is a real concern</h4>
+      <p>S&P calculates debt service coverage of just <strong>1.09x for Series D</strong>. That bond needs 91.7% of pledged revenue just to service its debt. There is almost no margin.</p>
+      <p>HOT is volatile. It dropped 30%+ during COVID and only recovered to pre-pandemic levels in 2023. The March 2026 MFR shows HOT collections already short of projections, before the FIFA bump.</p>
+      <p><strong>Indirect pathways back to the General Fund:</strong> some HOT flows directly to GF (about $146M in FY26), and an implied moral obligation means the City would find money elsewhere if HOT collapsed.</p>
+      <p><strong>Verdict: Real but not immediate risk.</strong> FIFA helps in summer 2026. The structural concern is whether HOT growth in 2027–2030 supports the full $1.4B bond stack while peer cities chase the same dollars.</p>
+    `
+  },
+  {
+    num: 2,
+    title: "Hurricane reserves",
+    verdict: "MOST ACUTE",
+    tagClass: "tag-acute",
+    summary: "Just $77M cushion above policy minimum entering hurricane season. Houston has the lowest mandatory reserves among peer cities.",
+    detail: `
+      <h4>The trajectory</h4>
+      <ul>
+        <li><strong>FY24 close (peak):</strong> $567M ending fund balance — $385M above policy minimum (23.4% of expenditures)</li>
+        <li><strong>FY25 close:</strong> $413M — Controller called it "largest fund balance decrease in history"</li>
+        <li><strong>FY26 March 2026 projection:</strong> $276M — "second-steepest decrease in history". Currently $77M above policy minimum.</li>
+        <li><strong>FY27–FY30:</strong> baseline gaps of $227M, $290M, $380M, and $463M per BFA Chair Sallie Alcorn</li>
+      </ul>
+      <h4>The hurricane risk picture</h4>
+      <ul>
+        <li><strong>Harris County is FEMA's #1-ranked county for hurricane risk</strong> in the United States (tied with Miami-Dade at score 100/100)</li>
+        <li>25 FEMA-declared disasters since 1983, frequency rising sharply</li>
+        <li>Houston has two of the top 10 costliest U.S. cyclones: Harvey ($160B, 2017) and Ike ($43B, 2008)</li>
+        <li>Tropical cyclones average $23B per event since 1980</li>
+      </ul>
+      <h4>The FEMA reimbursement timing problem</h4>
+      <p>FEMA's Public Assistance program reimburses 75% of eligible costs but takes <strong>6 to 24 months</strong>. The City must front 100% upfront. With current reserves at $77M above policy minimum, <strong>a Harvey-class event this season would push Houston below its own 7.5% reserve floor</strong> for the first time since post-Harvey recovery.</p>
+      <p>Per the Controller's <em>Weathering the Storm</em> report (September 2025): Houston's combined reserve policy is <strong>8–9% of GF</strong> — vs. Dallas (19–20%), San Antonio (15–16%), Miami (20%), and the GFOA-recommended 16.7%. Houston requires roughly half the recommended level.</p>
+      <p><strong>Verdict: Most acute and least addressed concern.</strong> The fund balance was specifically rebuilt after Harvey to front cash for the next event. From $567M (FY24) to projected $276M (FY26) is a 51% reduction in protection in two years. The Controller's policy proposals are concrete and costed. None are in the Mayor's FY27 framework.</p>
+    `
+  },
+  {
+    num: 3,
+    title: "Solid waste fee + transfer station crisis",
+    verdict: "VALID SKEPTICISM",
+    tagClass: "tag-skeptical",
+    summary: "Heavy trash is #1 most-reported problem. 3 of 5 transfer stations broken. Fee at maturity is 2x the SWD budget.",
+    detail: `
+      <h4>The current crisis</h4>
+      <ul>
+        <li><strong>Missed garbage pickup is the #1 most-reported problem in Houston</strong> — 2,179 311 complaints in 4 weeks (Click2Houston, May 4, 2026)</li>
+        <li>Heavy trash complaints <strong>nearly doubled</strong> in 12 weeks (2,916 → 5,440)</li>
+        <li><strong>3 of 5 transfer stations are non-functional</strong> — including one with "giant holes in the roof, flocks of birds, [and] wild hogs" per Mayor's COO Stephen David</li>
+        <li>If Houston ran all 5 transfer stations, financial modeling shows <strong>$20–25M/year</strong> in foregone revenue from third-party haulers ($75/ton)</li>
+      </ul>
+      <h4>The fee structure</h4>
+      <ul>
+        <li>$5/month starting → escalates to $25/month over 5 years</li>
+        <li>Approximately <strong>400,000 city-served households</strong></li>
+        <li>$25/month maturity = <strong>$180M/year</strong> — nearly 2x the entire SWD budget ($101M)</li>
+        <li>The Mayor's framing: "use-based fee, not a tax" + "Reduces pressure on the property tax rate"</li>
+      </ul>
+      <h4>The peer-city comparison (Mayor's strongest argument)</h4>
+      <p>Houston is the outlier among major Texas cities. Pasadena $34/mo, Pearland $23/mo, League City $22/mo. San Antonio, Dallas, Austin, Fort Worth, El Paso, and Arlington all use dedicated monthly fees.</p>
+      <h4>The hidden subsidy (May 7 BFA confirmation)</h4>
+      <p>Mayor Pro Tem Castex Tatum asked Director Dubowski directly: "And will the $6 rebates still remain intact for people with private trash?" Director's verbatim response: <strong>"Yes, that's part of the plan."</strong></p>
+      <p>The HOA trash subsidy is $6/household/month, paid to 47,000 participating households. <strong>$3.3M/year total, with 88% concentrated in Districts E and G — Houston's 2nd and 3rd highest median-income districts.</strong> Set in the 1980s, never adjusted for inflation. Mayor Sylvester Turner attempted to eliminate it ~2016 and failed politically.</p>
+      <h4>Workforce reality (HPM, March 5, 2026)</h4>
+      <ul>
+        <li>SWD workforce: 435 (Jan 2025) → 395 (Oct 2025) — 9.2% cut in 9 months</li>
+        <li><strong>16 of 40 voluntary retirees were truck drivers/operators</strong> — 40% of buyouts hit operationally critical positions</li>
+        <li>SWD budget cut by $5.9M annually</li>
+        <li>$26M for 62 new trucks (Jul/Aug 2025) produced visible recycling improvement</li>
+        <li>On-demand heavy trash pilot was placed "on hold until further notice" the same week it was supposed to launch</li>
+      </ul>
+      <p><strong>Verdict.</strong> Houston needs a solid waste fee — every comparable Texas city has one. <strong>But charging the fee while continuing the 1980s-era HOA subsidy to the wealthiest districts is the policy choice that makes this regressive twice over.</strong> A serious version would eliminate the subsidy, means-test it, or impose the fee on subsidy-receiving households as well. None is in the proposal.</p>
+    `
+  },
+  {
+    num: 4,
+    title: "5% utility right-of-way fee",
+    verdict: "REGRESSIVE",
+    tagClass: "tag-regressive",
+    summary: "~$100M/yr passed through utility bills. Hits low-income hardest. Workaround to property tax cap.",
+    detail: `
+      <h4>The structure</h4>
+      <ul>
+        <li>Applied to gross revenues of utilities operating in city right-of-way: water/sewer (city's own utility), CenterPoint electric, AT&T telecom, Comcast cable</li>
+        <li>Estimated at <strong>$100M/year</strong></li>
+        <li>Mayor's framing: "valet lanes" analogy — utilities compensating the City for using public streets</li>
+      </ul>
+      <h4>What's misleading about the framing</h4>
+      <p>A 5% fee on utility gross revenues doesn't track right-of-way usage; it tracks customer billing volume. It's structurally a tax on utility consumption.</p>
+      <p>"Consistent with what other utilities already pay" oversimplifies. Houston does collect franchise fees from CenterPoint and AT&T, but at varying rates and structures, typically lower than 5% of gross revenues. The new ROW fee adds 5% on top of existing franchise fees — including on Houston Water & Sewer, meaning the City's own utility customers pay the fee back to the City via their water bills.</p>
+      <h4>The CUS surplus reveal (May 7 BFA hearing)</h4>
+      <p>Council Member Pollard pressed COO Stephen David. The Combined Utility System has:</p>
+      <ul>
+        <li>Cash on hand: <strong>550 days</strong> vs. 300-day policy minimum</li>
+        <li>Debt service coverage: <strong>2.15x</strong> vs. 1.25x policy requirement</li>
+      </ul>
+      <p>Pollard: <em>"It's like having money in my own account today and saying, 'I don't want to use this. I'm going to go put it on credit or debt.'"</em></p>
+      <p>Stephen David refused to claim there's no surplus — <em>"That analysis is done during a rate study, which we're in the middle of right now."</em> When pressed: <em>"No."</em></p>
+      <p><strong>The Mayor's COO declined to claim there is no surplus capacity.</strong> The new ROW fee is a redirection of accumulated CUS surplus to the General Fund, not a true new revenue requirement.</p>
+      <h4>The regressivity issue</h4>
+      <p>Lower-income households spend a larger share of income on utilities. A 5% utility fee hits a $30K/year household harder (as % of income) than a $300K/year household. Property taxes scale roughly with home value. <strong>By converting "property tax revenue we can't raise" into "utility fees we can raise," the Mayor is shifting tax burden from property owners to all households — especially renters</strong>, who pay utility fees directly but don't pay property tax directly.</p>
+      <p><strong>Verdict.</strong> Most economically problematic piece of the FY27 package. Generates real revenue ($100M/yr) but does so via a regressive workaround to a voter-approved limit.</p>
+    `
+  },
+  {
+    num: 5,
+    title: "Drainage funds for blight",
+    verdict: "CONTESTED",
+    tagClass: "tag-contested",
+    summary: "$30M from Stormwater Fund authorized for building demolitions over Controller objection. 9-7 vote. Activist groups preparing legal challenge.",
+    detail: `
+      <h4>What happened (January 7, 2026)</h4>
+      <p>Houston City Council voted <strong>9-7</strong> to allocate <strong>$30 million from the Stormwater Fund</strong> to demolish blighted buildings. About 2,300 buildings are in line; 343 are already approved through hearing process.</p>
+      <h4>The Controller's formal objection</h4>
+      <p>Controller Hollins on the Council floor: <em>"This is not a disagreement about whether blighted and dangerous buildings are a problem in Houston — they are. This is about whether the city is legally permitted to spend $30 million dollars from a restricted stormwater fund to demolish buildings — and the answer is no."</em></p>
+      <h4>Mayor's response</h4>
+      <p>Whitmire accused Hollins of <em>"abuse my generosity of allowing him to do personal privileges"</em> during monthly financial reports, calling Hollins's remarks <em>"politics and clickbait."</em></p>
+      <h4>The seven NO votes</h4>
+      <ul>
+        <li><strong>Sallie Alcorn (Budget & Fiscal Affairs Chair)</strong> — <em>"too much of a stretch to use that money for building demolition"</em></li>
+        <li><strong>Mario Castillo</strong> (District H — East End / Northside)</li>
+        <li>Abbie Kamin, Edward Pollard, Tiffany Thomas, Julian Ramirez, Alejandra Salinas</li>
+      </ul>
+      <p>Council member Fred Flickinger, who voted yes, conceded <em>"a stretch as far as the use of these funds — but I don't think it's beyond the stretch of being reasonable."</em></p>
+      <h4>Why this is contested</h4>
+      <p>The Stormwater Fund stands at a record $166M this year — up from $100M last year and under $80M the year before. <strong>That growth is largely the direct result of the Jones/Watson lawsuit</strong> that forced the City to stop diverting drainage money. Now the Mayor is reallocating part of that increase. <strong>Northeast Action Collective and West Street Recovery</strong> are preparing legal challenges.</p>
+      <p>Daena Jones (Northeast Action Collective): <em>"If it's not illegal, it surely is immoral. Because we are flooding and we're suffering."</em></p>
+      <p><strong>Verdict.</strong> Contested between a defensible expansive reading and a probable Charter violation. The 9-7 vote and BFA Chair voting against tell you the legal question is genuinely uncertain. The substantive question for residents who flood: are these 343 buildings actually the highest-priority drainage investment for a fund that just had to be force-restored to voter-mandated levels by a lawsuit?</p>
+    `
+  }
+];
+
+// Render concerns
+const grid = document.getElementById('concernsGrid');
+concerns.forEach(c => {
+  const card = document.createElement('div');
+  card.className = 'concern';
+  card.innerHTML = `
+    <button class="close-btn" aria-label="Close">×</button>
+    <div class="num">${c.num}</div>
+    <span class="verdict-tag ${c.tagClass}">${c.verdict}</span>
+    <h3>${c.title}</h3>
+    <div class="summary">${c.summary}</div>
+    <div class="expand-prompt">Click to expand →</div>
+    <div class="detail">${c.detail}</div>
+  `;
+  card.addEventListener('click', (e) => {
+    if (e.target.classList.contains('close-btn')) {
+      card.classList.remove('expanded');
+      return;
+    }
+    if (!card.classList.contains('expanded')) {
+      document.querySelectorAll('.concern.expanded').forEach(c => c.classList.remove('expanded'));
+      card.classList.add('expanded');
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+  grid.appendChild(card);
+});
+
+// ============================================================
+// CHARTS
+// ============================================================
+Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.color = '#4A4A4A';
+
+const NAVY = '#1E3A5F', ORANGE = '#C8742A', RED = '#A8231A', GREEN = '#2A6B3F', GREY = '#6B6B6B', LIGHTGREY = '#D0D0D0';
+
+// Chart 1: Fund balance trajectory
+new Chart(document.getElementById('chartFundBalance'), {
+  type: 'line',
+  data: {
+    labels: ['FY17','FY18','FY19','FY20','FY21','FY22','FY23','FY24','FY25','FY26','FY27','FY28','FY29','FY30'],
+    datasets: [
+      { label: 'Actual / current projection', data: [270, 328, 321, 282, 281, 356, 485, 567, 413, 276, null, null, null, null], borderColor: NAVY, backgroundColor: 'rgba(30,58,95,0.08)', borderWidth: 3, tension: 0.2, pointRadius: 5 },
+      { label: 'Projected (no fee package)', data: [null,null,null,null,null,null,null,null,null, 276, 200, 100, -50, -200], borderColor: RED, borderWidth: 2, borderDash: [6, 4], tension: 0.2, pointRadius: 4 },
+      { label: '7.5% Policy Minimum', data: Array(14).fill(194), borderColor: ORANGE, borderWidth: 1.5, borderDash: [4, 3], pointRadius: 0 },
+      { label: '16.7% GFOA Best Practice', data: Array(14).fill(433), borderColor: GREEN, borderWidth: 1.5, borderDash: [4, 3], pointRadius: 0 }
+    ]
+  },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } }, tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': $' + ctx.parsed.y + 'M' } } }, scales: { y: { title: { display: true, text: '$ millions' } } } }
+});
+
+// Chart 2: Reserves comparison
+new Chart(document.getElementById('chartReserves'), {
+  type: 'bar',
+  data: {
+    labels: ['Houston', 'San Antonio', 'Dallas', 'Miami', 'GFOA'],
+    datasets: [
+      { label: 'GF Reserve %', data: [7.5, 15, 13.7, 10, 16.7], backgroundColor: NAVY, stack: 'a' },
+      { label: 'Disaster Reserve %', data: [1.5, 0.8, 5.5, 10, 0], backgroundColor: ORANGE, stack: 'a' }
+    ]
+  },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, scales: { x: { stacked: true }, y: { stacked: true, title: { display: true, text: '% of General Fund' } } } }
+});
+
+// Chart 3: OT Pattern
+new Chart(document.getElementById('chartOT'), {
+  type: 'bar',
+  data: {
+    labels: ['FY25\nAdopted', 'FY25\nActual', 'FY26\nAdopted', 'FY26\nEstimate', 'FY27\nProposed'],
+    datasets: [
+      { label: 'Fire Department', data: [null, 88.0, 43.6, 82.9, 52.7], backgroundColor: RED },
+      { label: 'Police Department', data: [null, 43.2, 15.9, 33.3, 22.4], backgroundColor: NAVY }
+    ]
+  },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': $' + ctx.parsed.y + 'M' } } }, scales: { y: { title: { display: true, text: 'GF Overtime ($M)' } } } }
+});
+
+// Chart 4: Deficit projection
+new Chart(document.getElementById('chartDeficit'), {
+  type: 'bar',
+  data: {
+    labels: ['FY26\nadopted', 'FY26\nMar 2026', 'FY27\nbaseline', 'FY28', 'FY29', 'FY30'],
+    datasets: [
+      { label: 'Closed by FY27 fee package', data: [0, 0, 130, 130, 130, 130], backgroundColor: GREEN },
+      { label: 'Remaining gap', data: [76, 174, 97, 160, 250, 333], backgroundColor: RED }
+    ]
+  },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': $' + ctx.parsed.y + 'M' } } }, scales: { x: { stacked: true }, y: { stacked: true, title: { display: true, text: '$ millions' } } } }
+});
+
+// Chart 5: Service degradation
+new Chart(document.getElementById('chartService'), {
+  type: 'bar',
+  data: {
+    labels: ['Missed\ngarbage\n(4 wks)', 'Heavy trash\n(12 wks)', 'Recycling\n(12 wks)', 'Transfer\nstations', 'SWD staff'],
+    datasets: [
+      { label: 'Prior period', data: [0, 2916, 7201, 5, 435], backgroundColor: LIGHTGREY },
+      { label: 'Current', data: [2179, 5440, 4180, 2, 395], backgroundColor: [RED, RED, GREEN, RED, RED] }
+    ]
+  },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, scales: { y: { type: 'logarithmic', title: { display: true, text: 'Value (log scale)' } } } }
+});
+
+// Chart 6: GF Composition
+new Chart(document.getElementById('chartGF'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Police ($1,111M)', 'Fire ($659M)', 'Debt Service ($508M)', 'Trash Pickup ($101M)', 'Parks ($88M)', 'Public Health ($50M)', 'Libraries ($50M)', '16 Other Depts ($479M)'],
+    datasets: [{
+      data: [1111, 659, 508, 101, 88, 50, 50, 479],
+      backgroundColor: [NAVY, RED, '#3D5A80', ORANGE, GREEN, '#5C8AA0', '#A8B5BA', GREY],
+      borderWidth: 2, borderColor: '#fff'
+    }]
+  },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' }, tooltip: { callbacks: { label: ctx => ctx.label + ' ' + Math.round(ctx.parsed / 30.46 * 10) / 10 + '%' } } } }
+});
+
+// ============================================================
+// PATTERN TABS
+// ============================================================
+document.querySelectorAll('#patternTabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#patternTabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.pattern-pane').forEach(p => p.classList.remove('active'));
+    document.getElementById('pane-' + btn.dataset.pane).classList.add('active');
+  });
+});
+
+// ============================================================
+// STICKY NAV
+// ============================================================
+document.querySelectorAll('nav.sticky button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = document.getElementById(btn.dataset.target);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+const sections = ['concerns', 'trajectory', 'patterns', 'hearing', 'calculator', 'workshops', 'action', 'about'];
+window.addEventListener('scroll', () => {
+  let current = 'concerns';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 100) current = id;
+  });
+  document.querySelectorAll('nav.sticky button').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.target === current);
+  });
+});
+
+// ============================================================
+// CALCULATOR
+// ============================================================
+function calc() {
+  const home = +document.getElementById('homeValue').value || 0;
+  const water = +document.getElementById('waterBill').value || 0;
+  const electric = +document.getElementById('electricBill').value || 0;
+  const phone = +document.getElementById('phoneBill').value || 0;
+  const cable = +document.getElementById('cableBill').value || 0;
+  const isCity = document.getElementById('trashService').value === 'city';
+
+  // Property tax: rate is $0.519190 per $100. 20% homestead exemption assumed.
+  const taxableValue = home * 0.8;
+  const propertyTaxAnnual = (taxableValue / 100) * 0.519190;
+
+  // Water rate increase 6% expected; ROW fee 5% pass-through
+  const waterIncrease = water * 0.06 * 12; // 6% annual rate increase
+  const waterROW = water * 0.05 * 12;
+
+  // ROW fee on other utilities (5% pass-through)
+  const electricROW = electric * 0.05 * 12;
+  const phoneROW = phone * 0.05 * 12;
+  const cableROW = cable * 0.05 * 12;
+
+  // Trash fee
+  const trashYr1 = isCity ? 60 : 0;          // $5/mo
+  const trashYr5 = isCity ? 300 : 0;          // $25/mo
+  const hoaSubsidy = isCity ? 0 : -72;        // -$6/mo (received as credit)
+
+  const totalNewYr1 = trashYr1 + hoaSubsidy + waterIncrease + waterROW + electricROW + phoneROW + cableROW;
+  const totalNewYr5 = trashYr5 + hoaSubsidy + waterIncrease + waterROW + electricROW + phoneROW + cableROW;
+
+  const fmt = n => '$' + Math.round(n).toLocaleString();
+
+  document.getElementById('calcResult').innerHTML = `
+    <h4 style="margin-top: 0; color: var(--navy);">Your estimated household impact</h4>
+    <div class="calc-line"><span>Current property tax (annual)</span><span>${fmt(propertyTaxAnnual)}</span></div>
+    <div class="calc-line"><span>Water rate increase (~6%/yr expected)</span><span>+${fmt(waterIncrease)}</span></div>
+    <div class="calc-line"><span>Water ROW pass-through (5%)</span><span>+${fmt(waterROW)}</span></div>
+    <div class="calc-line"><span>Electric ROW pass-through</span><span>+${fmt(electricROW)}</span></div>
+    <div class="calc-line"><span>Phone/internet ROW pass-through</span><span>+${fmt(phoneROW)}</span></div>
+    <div class="calc-line"><span>Cable ROW pass-through</span><span>+${fmt(cableROW)}</span></div>
+    <div class="calc-line"><span>${isCity ? 'New trash fee Year 1 ($5/mo)' : 'HOA trash subsidy received'}</span><span>${isCity ? '+' + fmt(trashYr1) : fmt(hoaSubsidy)}</span></div>
+    <div class="calc-line delta"><span><strong>Year 1 total bill increase</strong></span><span><strong>+${fmt(totalNewYr1)}</strong></span></div>
+    <div class="calc-line delta"><span><strong>Year 5 total bill increase ($25/mo trash)</strong></span><span><strong>+${fmt(totalNewYr5)}</strong></span></div>
+    <div style="margin-top: 14px; padding: 12px 14px; background: var(--light-grey); border-radius: 6px; font-size: 13px; color: var(--text-soft);">
+      ${isCity
+        ? '<strong>You are on city service.</strong> The Mayor\'s "no property tax rate increase" framing does not include the new fees and rate pass-throughs above. Your property tax rate is unchanged; your <em>total household bills are not</em>.'
+        : '<strong>You are on private trash via HOA.</strong> You continue to receive the $6/month subsidy on top of your private hauler bill. The new $5 trash fee does NOT apply to you. Most of the bill increase you face is from utility rate increases and the ROW pass-throughs.'}
+    </div>
+    <div style="margin-top: 8px; font-size: 12px; color: var(--text-soft); font-style: italic;">
+      Estimate assumes 20% homestead exemption on property tax, current rate of $0.519190/$100. Water rate growth rate based on Baker Institute historical average (6.5%/yr 2014–2024). ROW pass-throughs assumed at full 5% per Mayor's FY27 proposal; actual pass-through may vary by utility. This calculator is illustrative; consult your actual bills for precise figures.
+    </div>
+  `;
+}
+['homeValue','waterBill','electricBill','phoneBill','cableBill','trashService'].forEach(id => {
+  document.getElementById(id).addEventListener('input', calc);
+  document.getElementById(id).addEventListener('change', calc);
+});
+calc();
+
+// ============================================================
+// WORKSHOP QUESTIONS
+// ============================================================
+const questions = [
+  { dept: 'HPW', text: "Per the Baker Institute, Public Works' own engineering estimate is $650M/year needed for street and drainage maintenance, and the City has consistently spent less than half. What is the FY27 actual total funding for street and drainage capital and maintenance, and what is the documented gap to PW's stated need?", source: 'Baker Institute deep dive (Oct 2023)' },
+  { dept: 'HPW', text: "$760M in deferred facility maintenance was acknowledged in last year's BFA discussion. What is the current backlog estimate, and what is the FY27 plan to address it?", source: 'May 7 BFA hearing — Vice Mayor Pro Tem Peck' },
+  { dept: 'HPW', text: 'Per Baker: "substantial freshwater losses" and "persistent low pressure as infrastructure fails." What is the current annual water loss in gallons, and what is the rate of water main break increase year-over-year?', source: 'Baker Institute deep dive' },
+  { dept: 'HPW', text: 'Status of the EPA wastewater consent decree — what\'s the FY27 commitment and what milestones remain?', source: 'Federal court mandate' },
+  { dept: 'HPW', text: 'On the new ROW fee — Council Member Pollard\'s CUS surplus challenge: with 550 days cash on hand and 2.15x debt coverage, why are CUS rates not being reduced rather than redirected to the General Fund?', source: 'May 7 BFA hearing — Pollard / David exchange' },
+  { dept: 'HPW', text: 'On the East Plant: $4 billion projected, with $900M from Texas Water Development Board borrowing. What\'s the financing plan for the remaining $3.1B? Is any of it coming from the documented CUS surplus?', source: 'Public Works testimony' },
+
+  { dept: 'SWM', text: 'What portion of the $5/month fee goes to (a) SWD direct operations, (b) capital improvements (transfer stations, trucks), and (c) General Fund backfill? The Burns and McDonald study identified the administrative cost component at $7.57/month — what is the cost component for each operational category?', source: 'Burns and McDonald study, May 7, 2026' },
+  { dept: 'SWM', text: 'Director Hassen testified the department needs 70 more trucks and 30 more staff. What\'s funded in FY27?', source: 'HPM, March 5, 2026' },
+  { dept: 'SWM', text: 'Three of five transfer stations are non-functional: Neches Street, Sommermeyer, Central Street. What is the FY27 capital allocation for each, and projected return-to-service date?', source: 'Click2Houston, May 4, 2026' },
+  { dept: 'SWM', text: 'What is the implementation timeline for the on-demand heavy trash pilot that was put "on hold until further notice" in March 2026?', source: 'HPM, March 5, 2026' },
+  { dept: 'SWM', text: 'The HOA subsidy of $6/household/month continues in FY27 per Director Dubowski\'s verbatim confirmation. What is the rationale for not means-testing or sunsetting this subsidy as part of the SWD restructure? Districts E and G receive 88% of this subsidy.', source: 'May 7 BFA hearing; Houston Landing analysis' },
+  { dept: 'SWM', text: 'Will the new fee include exemptions for seniors, disabled veterans, or low-income households? Director Dubowski stated this is NOT contemplated for FY27.', source: 'May 7 BFA hearing — CM Salinas\'s office question' },
+
+  { dept: 'Mayor', text: 'On the $60K Mayor\'s podcast: what was the procurement process for the contract with Conflenti Media? Was a competitive bid solicited? What deliverables were specified?', source: 'HPM April 2026 ethics complaints filed' },
+  { dept: 'Mayor', text: 'On the EY Efficiency Study findings: what specific recommendations were implemented vs. deferred? What were the documented cost savings of each?', source: 'EY Efficiency Study, partial release' },
+  { dept: 'Mayor', text: 'On the Austin Street bike lane removal: what was the actual project cost, and on what budget line did it appear?', source: 'ABC13, April 2025; BikeHouston PIA request' },
+
+  { dept: 'Finance', text: 'Pollard\'s penny challenge: the proposed FY27 budget collects $20M below the property tax cap. What is the rationale for not collecting available revenue under the existing voter-approved cap before imposing $130M+ in new fees?', source: 'May 7 BFA hearing — Pollard' },
+  { dept: 'Finance', text: 'The $25 cap on the trash fee: Stephen David\'s verbal commitment was "during Whitmire\'s administration, absent a rate study." What guardrails will be written into the budget ordinance itself to make this binding?', source: 'May 7 BFA hearing — Thomas / David' },
+  { dept: 'Finance', text: 'The five-year forecast shows recurring deficits of $290M, $380M, and $463M in FY28–FY30. What is the structural plan to close those gaps, and which revenue or expenditure changes are assumed in the forecast that are not yet adopted?', source: 'BFA Chair Sallie Alcorn floor statement' },
+  { dept: 'Finance', text: 'Pension corridor compliance: is the FY27 contribution to HMEPS, HPOPS, and HFRRF within the SB 2190 corridor for each fund individually? What is the actuarially required contribution, and what is the proposed contribution?', source: 'Hollins Ten Hard Truth #8' },
+  { dept: 'Finance', text: 'TIRZ reform: with 27 active TIRZs and several scheduled to terminate within 5–10 years (Eastside FY27, Old Sixth Ward FY28, Memorial City FY29), what is the City\'s plan to convert terminated-TIRZ tax base back to General Fund revenue?', source: 'Baker Institute; FY27 XII_TAX appendix' },
+
+  { dept: 'QoL', text: 'Public testimony at the May 7 hearing identified a 16% reduction in the Quality of Life budget category for FY27. What specific service-level commitments are being reduced or eliminated, and which neighborhoods are most affected?', source: 'May 7 BFA hearing — Felix Kapoor public testimony' },
+  { dept: 'QoL', text: 'Of the ~700 unfilled positions citywide, how many are in each of these departments, and what services are not being delivered as a result?', source: 'HPM voluntary retirement reporting' },
+  { dept: 'QoL', text: 'On the "Let\'s Play Houston" public-private partnership: what oversight mechanisms exist for the $60M private foundation funding, and what city control is preserved over partnership-funded park improvements?', source: 'Community Impact reporting' }
+];
+
+const list = document.getElementById('questionsList');
+function renderQuestions(filter = 'all') {
+  list.innerHTML = '';
+  const filtered = filter === 'all' ? questions : questions.filter(q => q.dept === filter);
+  if (filtered.length === 0) {
+    list.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-soft);">No questions for this filter.</div>';
+    return;
+  }
+  const deptNames = { HPW: 'Public Works', SWM: 'Solid Waste', Mayor: "Mayor's Office", Finance: 'Finance', QoL: 'Health/Library/Parks' };
+  filtered.forEach(q => {
+    const item = document.createElement('div');
+    item.className = 'q-item';
+    item.innerHTML = `
+      <span class="dept">${deptNames[q.dept]}</span>
+      <div class="question">${q.text}</div>
+      <div class="source">Source: ${q.source}</div>
+    `;
+    list.appendChild(item);
+  });
+}
+document.querySelectorAll('#qFilter button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#qFilter button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderQuestions(btn.dataset.filter);
+  });
+});
+renderQuestions();
+
+</script>
+</body>
+</html>
