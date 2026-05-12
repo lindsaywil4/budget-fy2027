@@ -173,13 +173,13 @@ li { margin-bottom: 6px; line-height: 1.6; }
     <h1>Understanding Houston's FY2027 Budget</h1>
     <div class="subtitle">A plain-English evaluation, with sources, for the budget workshops ahead.</div>
     <p style="max-width: 820px; opacity: 0.92;">
-      Houston's structural budget deficit grows from $76M (FY26) to a projected $463M by FY30. The Mayor's FY27 plan adds a $5/month trash fee and a 5% utility right-of-way fee, holds the property tax rate flat, and leaves the long-term trajectory intact. Two of three rating agencies have placed Houston on negative credit watch. Hurricane reserves are the lowest among peer cities.
+      Houston's $7.5B FY27 budget tackles a five-year deficit projected to grow from $84M (FY25) to $446.7M (FY30) under do-nothing baseline — with a $5/month trash fee and a 5% utility right-of-way fee, holds the property tax rate flat for a third year, and shifts ~$200M from the Combined Utility System to the General Fund. The Mayor's "Revised General Fund Outlook" (May 11 SNA presentation) buys time but the fund balance still falls to <strong>−1%</strong> by FY30. Meanwhile <strong>77% of the $262M in 2022 TIRZ revenue ($202M) went to 10 above-median-income TIRZs</strong>, $379M of legally available property tax revenue is left on the table by the rate cap, and the Burns &amp; McDonnell study recommends a trash rate of <strong>$27.28/mo today rising to $39.16/mo by FY31</strong>.
     </p>
     <div class="stats">
-      <div class="stat"><div class="num">$76M → $463M</div><div class="label">Projected deficit growth FY26 → FY30</div></div>
-      <div class="stat"><div class="num">10.4%</div><div class="label">Current GF reserve % (vs. 16.7% GFOA best practice)</div></div>
-      <div class="stat"><div class="num">2 of 3</div><div class="label">Rating agencies on negative outlook</div></div>
-      <div class="stat"><div class="num">$3.3M</div><div class="label">Annual subsidy to HOA private trash (88% to wealthiest 2 districts)</div></div>
+      <div class="stat"><div class="num">$84M → $447M</div><div class="label">Do-nothing baseline GF gap FY25 → FY30 (Mayor's May 11 SNA slide)</div></div>
+      <div class="stat"><div class="num">77%</div><div class="label">Share of 2022 TIRZ revenue captured by the 10 above-median-income TIRZs (Baker Institute)</div></div>
+      <div class="stat"><div class="num">$2.9B</div><div class="label">Cumulative property tax revenue lost to the rate cap since 2015 (Finance Director Dubowski)</div></div>
+      <div class="stat"><div class="num">$27.28 → $39.16</div><div class="label">Burns &amp; McDonnell recommended trash + Clean City fee, FY27 → FY31</div></div>
     </div>
   </div>
 </header>
@@ -189,18 +189,19 @@ li { margin-bottom: 6px; line-height: 1.6; }
     <button data-target="concerns" class="active">5 Concerns</button>
     <button data-target="trajectory">Budget Trajectory</button>
     <button data-target="patterns">Patterns Beneath</button>
-    <button data-target="hearing">May 7 Hearing</button>
+    <button data-target="hearing">May 6 Hearing</button>
     <button data-target="calculator">Your Bill</button>
     <button data-target="workshops">Workshop Guide</button>
     <button data-target="action">Take Action</button>
-    <button data-target="about">Sources</button>
+    <button data-target="sources">Source Materials</button>
+    <button data-target="about">All Sources</button>
   </div>
 </nav>
 
 <section id="concerns">
   <div class="container">
-    <h2>Five Resident Concerns at a Glance</h2>
-    <p class="section-intro">Click any concern card to expand the full evaluation. Each is sourced and tied to specific budget line items, council votes, or rating agency thresholds.</p>
+    <h2>Seven Resident Concerns at a Glance</h2>
+    <p class="section-intro">Click any concern card to expand the full evaluation. Each is sourced and tied to specific budget line items, council votes, rating agency thresholds, the City's own consultant studies (Burns &amp; McDonnell SWD/Enterprise Fund Study), Texas Comptroller Ch. 311 TIRZ filings, the Baker Institute Nov 2024 TIRZ study, May 2026 Houston Chronicle coverage, and Stephen David's May 11 presentation to the Super Neighborhood Alliance.</p>
     <div class="concerns-grid" id="concernsGrid">
       <!-- Populated by JS -->
     </div>
@@ -228,9 +229,9 @@ li { margin-bottom: 6px; line-height: 1.6; }
         <div class="caption">FY26 budget used essentially the same failed assumption as FY25. By March 2026, FY26 was tracking $60M+ over again.</div>
       </div>
       <div class="chart-card">
-        <h3>4. Five-year deficit projection vs. fee package</h3>
+        <h3>4. Baseline gap vs. revised gap (Mayor's own scenario)</h3>
         <div class="chart-wrapper"><canvas id="chartDeficit"></canvas></div>
-        <div class="caption">The Mayor's $130M FY27 fee package closes about a third of the FY27 gap and a smaller share of out-year gaps.</div>
+        <div class="caption">From Stephen David's "Revised General Fund Outlook" slide (May 11 SNA presentation). Even after the fee package, FY30 fund balance is projected at <strong>−1%</strong> — below the 7.5% policy minimum. The Mayor's own slide caption: <em>"Does not permanently solve the problem, but buys time."</em></div>
       </div>
       <div class="chart-card">
         <h3>5. Solid Waste service crisis</h3>
@@ -241,6 +242,16 @@ li { margin-bottom: 6px; line-height: 1.6; }
         <h3>6. General Fund composition (FY26 adopted)</h3>
         <div class="chart-wrapper" style="height: 320px;"><canvas id="chartGF"></canvas></div>
         <div class="caption">Police, Fire, and Debt Service consume more than 75% of all General Fund spending. Twenty-one other departments — including Solid Waste, Parks, Libraries, Public Health — share the remaining 25%.</div>
+      </div>
+      <div class="chart-card">
+        <h3>7. Revenue diversity — Houston vs. peer cities (Mayor's own slide)</h3>
+        <div class="chart-wrapper tall"><canvas id="chartRevDiversity"></canvas></div>
+        <div class="caption">From Stephen David's May 11 SNA presentation. Texas peer cities stack a property-tax rate <em>plus</em> garbage fee + water transfer + utility transfer into the General Fund. <strong>Houston's bar is a single component: $0.519 property tax. Nothing else.</strong> The FY27 budget changes that.</div>
+      </div>
+      <div class="chart-card">
+        <h3>8. TIRZ revenue by neighborhood income tier</h3>
+        <div class="chart-wrapper tall"><canvas id="chartTIRZ"></canvas></div>
+        <div class="caption">2022 property tax increment captured by each tier. 10 above-median-income TIRZs got 77% of the money ($201.7M). The 3 lowest-income TIRZs (Fifth Ward, Leland Woods, Sunnyside) got 1.8%. Sources: Texas Comptroller Ch. 311 + Baker Institute (Nov 2024).</div>
       </div>
     </div>
   </div>
@@ -255,6 +266,7 @@ li { margin-bottom: 6px; line-height: 1.6; }
       <button data-pane="workforce">Workforce Capacity</button>
       <button data-pane="privatization">Soft Privatization</button>
       <button data-pane="transparency">Transparency</button>
+      <button data-pane="diversity">Revenue Mono-culture</button>
     </div>
     <div class="pattern-content">
       <div class="pattern-pane active" id="pane-maintenance">
@@ -267,7 +279,7 @@ li { margin-bottom: 6px; line-height: 1.6; }
         <h4>The transfer station case study (Click2Houston, May 4, 2026)</h4>
         <p>Three of five Solid Waste transfer stations are non-functional, including one with <em>"giant holes in the roof, flocks of birds, and wild hogs"</em> per Mayor's COO Stephen David. The cause: a previous administration allowed Solid Waste to stop contributing to the Maintenance and Renewal Fund. SWD then cut facility maintenance first when squeezed.</p>
         <p>Cost: $20–25M/year in foregone revenue (Houston could charge third-party haulers $75/ton if it ran its own stations). Plus chronic overtime from longer routes.</p>
-        <h4>Plus a $760M facilities backlog (May 7, 2026 BFA hearing)</h4>
+        <h4>Plus a $760M facilities backlog (May 6, 2026 BFA hearing)</h4>
         <p>Vice Mayor Pro Tem Peck quoted the FY26 figure: <strong>$760 million in deferred facility maintenance, projected $1.4 billion over five years.</strong> The FY27 budget transfers $48.3M to the Maintenance and Renewal Fund — funding the backlog at roughly 6% per year.</p>
       </div>
       <div class="pattern-pane" id="pane-workforce">
@@ -299,10 +311,10 @@ li { margin-bottom: 6px; line-height: 1.6; }
           <li><strong>67 vacated positions in parks and libraries unfilled</strong> (40 parks + 27 libraries)</li>
           <li><strong>"Let's Play Houston" public-private partnership</strong> — $60M for park upgrades funded by a private foundation rather than the City</li>
           <li><strong>Moody Park and Keith-Wiess Park operations transferred to Harris County Precinct 2</strong> in 2026</li>
-          <li><strong>Quality of Life budget category reduced by 16% in FY27</strong> (per FY27 budget chart, flagged in May 7 public testimony) — the only category in the priority chart that decreases</li>
+          <li><strong>Quality of Life budget category reduced by 16% in FY27</strong> (per FY27 budget chart, flagged in May 6 public testimony) — the only category in the priority chart that decreases</li>
         </ul>
         <p><strong>This is <em>de facto</em> privatization-by-attrition.</strong> Cut city funding → leave positions unfilled → replace direct city operations with public-private partnerships → transfer responsibility to other governmental units. The end result is similar to formal privatization without triggering the political backlash.</p>
-        <h4>Stephen David's "name their customers" admission (May 7, 2026)</h4>
+        <h4>Stephen David's "name their customers" admission (May 6, 2026)</h4>
         <p>When Council Member Davis asked about managed competition for trash, Mayor's COO Stephen David explained why it has stalled:</p>
         <blockquote style="border-left: 3px solid var(--orange); padding: 10px 16px; margin: 12px 0; background: var(--light-grey); font-style: italic; color: var(--text-soft);">
           "They all wanted to name their customers. They wanted to pick the neighborhoods that were favorable to them on road width, on lack of ditches, on different types of stuff."
@@ -317,9 +329,47 @@ li { margin-bottom: 6px; line-height: 1.6; }
           <li><strong>Drainage settlement uploaded during the meeting</strong> rather than published in advance (May 2025) — Council Member Kamin objected: <em>"to not give the public sufficient time causes me heartburn"</em></li>
           <li><strong>Mayor's public attacks on Hollins's MFR process:</strong> <em>"abuse my generosity of allowing him to do personal privileges"</em> (January 2026)</li>
           <li><strong>The Austin Street bike lane removal (April 2025)</strong> — Houston Public Works ripped out protected bike lanes installed using $2 million from Harris County, discovered only via Texas Public Information Act request</li>
-          <li><strong>Letters of support obtained before budget published</strong> (confirmed at May 7 hearing): Pollard pressed Stephen David, who admitted external advocacy groups were briefed on framing and provided supportive letters before the actual document was released</li>
+          <li><strong>Letters of support obtained before budget published</strong> (confirmed at May 6 hearing): Pollard pressed Stephen David, who admitted external advocacy groups were briefed on framing and provided supportive letters before the actual document was released</li>
           <li><strong>Burns and McDonald cost-of-service study released same day workshops scheduled to begin</strong> — six days before department workshops, limiting practical review time</li>
         </ul>
+        <h4>Mintz: "The mayor doesn't want to have that conversation in the public eye" (Chronicle, May 11, 2026)</h4>
+        <p>Evan Mintz, the Chronicle's opinion editor, makes the communications case explicitly. When Council Member Pollard pressed Whitmire at City Council on whether the $5 fee was a "garbage fee" or an "administrative fee" — directly asking whether the money would go to garbage collection or to other administrative expenses — the Mayor responded: <em>"I don't think now is the time."</em></p>
+        <p>Mintz contrasts this with previous administrations. Mayor Annise Parker took a summer sales job to overcome shyness because she knew she'd have to <em>"make a sale to the public"</em> on policies like the drainage fee and Bayou Greenways. Whitmire, by contrast, has spent 50 years working <em>behind closed doors</em> in the Legislature, and Mintz argues this is now showing up as a budget-rollout failure.</p>
+        <p>The $60K Mayor's podcast (901 Bagby) released a new episode on May 9 — but devoted it largely to <em>Houston hosting the World Cup</em>, not the budget. Meanwhile, Controller Hollins is running budget town halls and a social-media explainer series; the office without final budget authority is doing the public education the office <em>with</em> final budget authority is not.</p>
+      </div>
+      <div class="pattern-pane" id="pane-diversity">
+        <h3>The revenue mono-culture (and why every other Texas city looks different)</h3>
+        <p>The Mayor's "LACK OF REVENUE DIVERSITY" slide at the May 11 Super Neighborhood Alliance meeting is the most concise statement of the structural problem the administration has put on the record. Every other major Texas city stacks four streams into its General Fund. Houston stacks one.</p>
+        <h4>The numbers behind the slide (Tax Year 2024 / Fiscal Year 2025)</h4>
+        <p>Functional General Fund rate per $100 of valuation (peer-city stacked components):</p>
+        <ul>
+          <li><strong>San Antonio:</strong> $0.5416 property tax + $0.1185 garbage fee + $0.0215 water transfer + $0.2651 utility transfer = <strong>$0.9467 functional rate</strong></li>
+          <li><strong>El Paso:</strong> $0.7624 + $0.0948 water + $0.0369 utility = <strong>$0.8941</strong></li>
+          <li><strong>Fort Worth:</strong> $0.6725 + $0.0730 water + $0.0241 utility = <strong>$0.7696</strong></li>
+          <li><strong>Dallas:</strong> $0.7047 + $0.0760 water + $0.0500 utility = <strong>$0.8307</strong></li>
+          <li><strong>Austin:</strong> $0.4776 + $0.0946 garbage + $0.0215 water + $0.0526 utility = <strong>$0.6463</strong></li>
+          <li><strong>Houston:</strong> $0.5192 property tax. <strong>That's it. $0 garbage. $0 water transfer. $0 utility transfer.</strong></li>
+        </ul>
+        <p>Stephen David's framing: <em>"General Fund in Houston is only ad valorem, sales, and franchise/misc. fees… While being the largest city in Texas, Houston's growth does not match its functional tax rate. Creates compression in the General Fund in which revenues are outpaced by necessary work."</em> This is the structural argument <em>for</em> the FY27 plan: the new garbage fee and ROW fee aren't experiments — they are bringing Houston into alignment with the other five major Texas cities.</p>
+        <h4>The "What we are NOT doing" public commitment (SNA slide, May 11)</h4>
+        <p>Stephen David's affirmative pledge from the same deck:</p>
+        <ul>
+          <li><strong>NOT raising property taxes</strong></li>
+          <li><strong>NOT expanding government programs</strong></li>
+          <li><strong>NOT relying on one-time transfers</strong></li>
+          <li><strong>NOT deferring infrastructure obligations</strong></li>
+        </ul>
+        <p>The first commitment forecloses the most progressive available revenue lever. The second freezes the City's quality-of-life programming at FY26 levels. The third is welcome but unverified. The fourth is contradicted by the Baker Institute's $420M cumulative shortfall finding and Vice Mayor Pro Tem Peck's $760M facilities backlog figure flagged in the Deferred Maintenance tab. <em>Whether the "NOT deferring infrastructure obligations" claim holds up is the highest-leverage thing for residents to track in FY27 line items.</em></p>
+        <h4>The "Governing Milestones" timeline (SNA slide)</h4>
+        <ul>
+          <li><strong>Jan 1, 2024:</strong> Whitmire sworn in.</li>
+          <li><strong>May 22, 2024:</strong> Council passes Ernst &amp; Young assessment of the City.</li>
+          <li><strong>Nov 2024:</strong> EY assessment complete; Council briefings begin.</li>
+          <li><strong>Feb–May 2025:</strong> FY26 kickoff. Hiring freeze. Organizational restructuring mandated. Voluntary retirement program begun. Jones/Watson settled; drainage funding restored at ~$500M/yr.</li>
+          <li><strong>June 4, 2025:</strong> FY26 adopted. <em>"First time the General Fund spent less than the previous year."</em> Reflected $122M of sustainable reduction; $267M from State of Texas; $314M from Federal Government.</li>
+          <li><strong>Feb 4, 2026:</strong> FY27 kickoff. <em>"The largest fiscal structural change in decades."</em></li>
+        </ul>
+        <p><strong>Note the embedded one-time transfers in FY26:</strong> $267M state + $314M federal = <strong>$581M of non-recurring revenue</strong> credited to making FY26 the "first time the General Fund spent less than the previous year." That figure is independent of the structural reforms and will not recur at the same magnitude in FY27.</p>
       </div>
     </div>
   </div>
@@ -327,7 +377,7 @@ li { margin-bottom: 6px; line-height: 1.6; }
 
 <section id="hearing" class="alt">
   <div class="container">
-    <h2>The May 7, 2026 BFA Hearing — Key Moments</h2>
+    <h2>The May 6, 2026 BFA Hearing — Key Moments</h2>
     <p class="section-intro">The Budget and Fiscal Affairs Committee heard the FY27 overview from Finance Director Dubowski. Five exchanges put the report's analytical findings on the public record.</p>
     <div class="quote-card">
       <div class="speaker">Mayor Pro Tem Castex Tatum → Director Dubowski (HOA subsidy continues)</div>
@@ -401,11 +451,11 @@ li { margin-bottom: 6px; line-height: 1.6; }
 <section id="workshops" class="alt">
   <div class="container">
     <h2>Budget Workshop Survival Guide</h2>
-    <p class="section-intro">The FY27 budget moves through Council on a compressed schedule between May 7 and June 3, 2026. Use this guide to engage substantively at workshops, public hearing, and final vote.</p>
+    <p class="section-intro">The FY27 budget moves through Council on a compressed schedule between May 6 and June 3, 2026. Use this guide to engage substantively at workshops, public hearing, and final vote.</p>
 
     <h3>The schedule</h3>
     <div class="schedule-list">
-      <div class="schedule-row"><div class="date">May 7 (past)</div><div class="event">Five-Year Forecast and FY27 Budget Overview presented to BFA</div><div class="action">Transcript & slides available</div></div>
+      <div class="schedule-row"><div class="date">May 6 (past)</div><div class="event">Five-Year Forecast and FY27 Budget Overview presented to BFA</div><div class="action">Transcript & slides available</div></div>
       <div class="schedule-row highlight"><div class="date">May 12–19</div><div class="event"><strong>Department budget workshops</strong> at BFA Committee</div><div class="action">Submit questions via SharePoint</div></div>
       <div class="schedule-row"><div class="date">May 16, 10am Sat</div><div class="event">In-person budget town hall at Fondy Recreation Center</div><div class="action">Attend; testify if signed up</div></div>
       <div class="schedule-row highlight"><div class="date">May 20, 9am</div><div class="event"><strong>Public hearing</strong> at City Council meeting (chambers)</div><div class="action">Sign up online by 5pm May 19</div></div>
@@ -423,6 +473,7 @@ li { margin-bottom: 6px; line-height: 1.6; }
       <button data-filter="SWM">Solid Waste</button>
       <button data-filter="Mayor">Mayor's Office</button>
       <button data-filter="Finance">Finance</button>
+      <button data-filter="TIRZ">TIRZ</button>
       <button data-filter="QoL">Health/Library/Parks</button>
     </div>
     <div class="questions-list" id="questionsList"><!-- Populated by JS --></div>
@@ -492,6 +543,151 @@ li { margin-bottom: 6px; line-height: 1.6; }
   </div>
 </section>
 
+<section id="sources" class="alt">
+  <div class="container">
+    <h2>Source Materials &amp; Supporting Evidence (May 2026)</h2>
+    <p class="section-intro">Four new primary sources have arrived in the past week — one city-commissioned consulting study and three Houston Chronicle pieces published between May 8 and May 11, 2026. Each is summarized below with the specific facts and framings it adds to the analysis above. The sources do not agree with each other on the verdict; they do agree on most of the underlying facts.</p>
+
+    <div class="action-tier" style="border-left: 4px solid var(--navy);">
+      <h3><span class="tier-badge" style="background: var(--navy);">City consultant</span> Burns &amp; McDonnell SWD Cost of Service &amp; Enterprise Fund Study (May 4, 2026)</h3>
+      <p style="font-size: 14px; color: var(--text-soft); margin-bottom: 10px;"><em>Solid Waste Cost of Service and Enterprise Fund Study, prepared for the City of Houston by Burns &amp; McDonnell Engineering Company, Inc. Released to Council May 4, 2026 — six days before department workshops begin.</em></p>
+      <h4>Why this matters</h4>
+      <p>This is the technical foundation underneath the Mayor's $5/mo trash-fee proposal. The study lays out three rate-implementation options, the full cost-of-service math, the recommended reserve-fund structure for converting SWMD into an enterprise fund, and a benchmark comparison against seven peer cities. The headline finding is that <strong>Houston's full cost of service is $24.72/mo (residential) + $2.56/mo (Clean City Fee) = $27.28/mo today</strong>, escalating to ~$39/mo by FY31 under either of the two recommended options.</p>
+      <h4>Key facts</h4>
+      <ul>
+        <li><strong>Two main rate options.</strong> Option 1: start at cost of service ($27.56/mo total in FY27) and step up to $39.16/mo by FY31. Option 2: start higher ($34.85/mo) and rise more slowly via 3%/yr inflation adjustments to $39.22 by FY31. A third "policy-focused" Option 3 starts below cost of service and ramps up.</li>
+        <li><strong>Peer benchmark (FY26 residential, large SW cities):</strong> Austin $64.10, LA $55.95, Dallas $39.73, Phoenix $36.59, San Antonio $30.75, Fort Worth $25.75. <strong>Houston at full cost of service is lower than all of them.</strong></li>
+        <li><strong>Service-level reality.</strong> Current SWMD collection rates: 85% residential garbage, 65% recycling/heavy trash, vs. 99% industry standard. Closing the gap requires 114 additional weekly routes.</li>
+        <li><strong>Fleet.</strong> 34% of the SWD fleet is at or past its 7-year industry-best-practice replacement age; fleet average age is 6.5 years.</li>
+        <li><strong>$55M citywide infrastructure backlog</strong> identified by a 2023 study.</li>
+        <li><strong>Reserve structure recommended:</strong> 90-day operating reserve (25% of annual op-ex), plus separate Debt Service, Capital Improvement, and Storm Debris reserves. Storm Debris target: $50M, with ~20% drawdown assumed each year.</li>
+        <li><strong>Equity option B&amp;M proposed:</strong> a "Reduced Residential Rate" of $2/mo less than the full rate for elderly and low-income residents, modeled on the W.A.T.E.R. Fund. <em>Director Dubowski testified on May 6 that this is NOT contemplated for FY27.</em></li>
+        <li><strong>HOA Sponsorship confirmation:</strong> 46,330 residents currently receive the $6/mo reimbursement.</li>
+        <li><strong>SWD operating cost trajectory:</strong> $160M (FY26) → $235M (FY30), excluding variable storm-cleanup costs.</li>
+        <li><strong>Additional revenue sources flagged:</strong> Roll-Off Service Expansion (commercial), Transfer Station Operations (Houston owns 3 transfer stations it does not operate), Grant Funding (Recycling Partnership, Closed Loop Fund, EPA SWIFR grants).</li>
+      </ul>
+      <h4>What this study supports / does not support</h4>
+      <p>The study supports the Mayor's case that <em>Houston needs a residential solid waste fee structured as an enterprise fund</em>. It does <strong>not</strong> support the Mayor's $5-rising-to-$25 framing as a sufficient fee. At $25/mo by FY32, the Mayor's number is below the study's Year-5 recommended total of ~$39/mo. The study also supports — and the Mayor's plan omits — both the means-tested reduced-rate option and the question of whether to sunset the $6 HOA sponsorship subsidy as part of enterprise-fund conversion.</p>
+    </div>
+
+    <div class="action-tier" style="border-left: 4px solid var(--orange);">
+      <h3><span class="tier-badge" style="background: var(--orange);">Chronicle</span> "The garbage fee got the headlines. Here's what really matters." — Bill King (May 8, 2026)</h3>
+      <p style="font-size: 14px; color: var(--text-soft); margin-bottom: 10px;"><em>By Bill King, fellow in public finance at Rice University's Baker Institute for Public Policy. Houston Chronicle Opinion // Outlook.</em></p>
+      <h4>What King argues</h4>
+      <p>The $24M garbage fee is <em>"the least consequential part of the proposal."</em> The actual budget mechanics are the two ~$100M moves on the Combined Utility System (CUS) side: shifting all of SWD's expenses onto the CUS, and charging a new right-of-way fee on the CUS that brings ~$100M <em>into</em> the General Fund. <strong>That two-sided maneuver — not the trash fee — is what closes most of the FY27 gap.</strong></p>
+      <h4>Key facts and framings King adds</h4>
+      <ul>
+        <li>Houston entered the cycle needing <strong>"a little under $200 million"</strong> to balance the General Fund. Structural deficit dates to <strong>"a poorly considered pension increase in the early 2000s."</strong></li>
+        <li><strong>CUS fund balance: $4.4B last year, with almost $2B in liquidity.</strong> Past three years: $2.4B in capital improvements, ~$1B in bond debt reduction.</li>
+        <li>Texas Water Development Board: a <strong>$1B loan</strong> for the dilapidated East End Water Plant; more state help possible.</li>
+        <li>If Houston tried to close the FY27 GF deficit purely with property tax, the required increase would be <strong>17% this year and more than 50% over five years</strong>.</li>
+        <li>King's structural reform list: (1) revisit the half of sales-tax revenue going to METRO — <em>"a transit agency that carries fewer riders than it did in 2004"</em>; (2) revisit the <strong>$200M in property taxes annually diverted to TIRZs</strong> that <em>"largely serve wealthy neighborhoods"</em>; (3) <em>"look at a far less costly way to deliver police and fire services."</em></li>
+        <li>Sustainability of the SWD fee: <em>"Houston is simply too sprawling to run an effective garbage pickup system that serves only about 400,000 single-family homes."</em> The fee will drive more households to private haulers, making the public system <em>less</em> efficient over time.</li>
+      </ul>
+      <h4>King's verdict</h4>
+      <p><em>"On balance, I think the overall proposal is a reasonable stopgap. It closes the budget gap for now, sets us on a better path going forward, and ensures the utility fund has the money it needs for our water and sewer systems for the near future. But make no mistake: This is not a permanent solution to the city's financial woes, and these are not problems we can tax our way out of."</em></p>
+    </div>
+
+    <div class="action-tier" style="border-left: 4px solid var(--green);">
+      <h3><span class="tier-badge" style="background: var(--green);">Chronicle</span> "Good job Whitmire. No budget is perfect but this one stops the bleeding." — Editorial Board (May 10, 2026)</h3>
+      <p style="font-size: 14px; color: var(--text-soft); margin-bottom: 10px;"><em>Houston Chronicle Editorial Board. The Board won the 2022 and 2025 Pulitzer Prizes in editorial writing.</em></p>
+      <h4>The Board's verdict</h4>
+      <p>The FY27 budget is the Mayor's <strong>"first genuine attempt at getting serious about solving those structural problems"</strong> after two years of accounting tricks (drawing down reserves, cutting jobs). Whitmire <em>"deserves serious praise for finally putting forward a big proposal,"</em> but the Board's analysis is structured as a "good / bad / ugly" with substantial reservations.</p>
+      <h4>The Good</h4>
+      <ul>
+        <li><strong>Five-year deficit:</strong> goes from $522M before to a more manageable $172M residual by FY31. FY27 deficit: $25M (drawn from reserves). <em>"A dramatic improvement, if passed."</em></li>
+        <li><strong>SWD-to-CUS shift and ROW fee:</strong> "a nifty trick that ultimately shifts more costs to our water bills." Notes Finance Director Dubowski told Council that San Antonio's right-of-way fees on electric and water utilities <strong>"bring the city as much revenue as property taxes."</strong></li>
+        <li><strong>Garbage fee endorsement:</strong> "We have previously endorsed the concept of a trash fee, mainly because every other city in the state has one, and Houston is in dire need of new revenue."</li>
+      </ul>
+      <h4>The Bad</h4>
+      <ul>
+        <li><strong>HPD/Fire OT.</strong> Budget adds $105M to HPD and $60M to Fire. Combined cost: <strong>~$2 billion</strong>. Controller Hollins is auditing OT and put it bluntly: <em>"If we have the largest force ever, then overtime spending should be going down. The fact that it's not tells you that something is up from a managerial standpoint."</em></li>
+        <li><strong>Water money for trash.</strong> Confirms Hollins's objection that subsidizing SWD operations from CUS will "slowly drain" the $4.4B CUS fund balance. <strong>Houston is under a $9B federal consent decree</strong> for water infrastructure.</li>
+      </ul>
+      <h4>The Ugly — structural reform claim is overstated</h4>
+      <p>The Board calls the budget proposal's claim that the fee package <em>"corrects"</em> Houston's structural budget issue <strong>a stretching of the truth</strong>. The Mayor refuses to address the property tax cap: rate has been cut nearly 20% since hitting the cap in 2015, <strong>$2.9B cumulative loss</strong> in property tax revenue. For FY27 alone, <strong>$379M in revenue forgone</strong> — more than enough to close the deficit without any new fees.</p>
+      <h4>"Be direct with voters"</h4>
+      <p>The Board specifically criticizes Whitmire's framing of the $5 fee as an "administrative fee" that will "only last for two years" as <em>"political nonsense"</em> and notes the mixed messaging is exacerbated by the simultaneous release of the Burns &amp; McDonnell study recommending up to $45/mo by 2031.</p>
+    </div>
+
+    <div class="action-tier" style="border-left: 4px solid var(--red);">
+      <h3><span class="tier-badge" style="background: var(--red);">Chronicle</span> "Whitmire has a transformative budget. Why isn't he selling it to the public?" — Evan Mintz (May 11, 2026)</h3>
+      <p style="font-size: 14px; color: var(--text-soft); margin-bottom: 10px;"><em>By Evan Mintz, Editor of Opinion and Community Engagement. Mintz was a 2017 Pulitzer finalist for editorial writing and part of the editorial board team that was a 2018 Burl Osborne Award finalist.</em></p>
+      <h4>The thesis</h4>
+      <p>Whitmire's budget proposal <em>"may be stronger than critics admit, but he is doing little to explain it to Houstonians who still have real questions."</em> Mintz's frame: Mayor Parker took a summer sales job at Cox's Department Store to overcome shyness because she'd have to <em>"make a sale to the public"</em> on policies like the drainage fee. Whitmire's 50 years in the Legislature has produced strong behind-closed-doors political skills but a public communication gap.</p>
+      <h4>The specific exchange Mintz highlights</h4>
+      <p>At City Council, Council Member Ed Pollard asked Whitmire directly to clarify whether the $5 monthly fee would be spent on garbage collection and pickup or on other administrative expenses. Whitmire's response: <em>"I don't think now is the time."</em> He redirected Pollard to a private finance briefing.</p>
+      <h4>The contrast with the Controller</h4>
+      <p>Hollins is doing the explanatory work the Mayor isn't: media appearances, a series of budget town halls across Houston this month, social-media explainers, and "conversations with everyday Houstonians about the city budget." The Mayor's $60K podcast (901 Bagby) released an episode on May 9 — <em>"yet again treated to an episode that largely focused on Houston hosting the World Cup"</em> rather than the budget proposal.</p>
+      <h4>Mintz's open questions on the substance</h4>
+      <p>Whitmire is not addressing in public: (1) out-of-control overtime spending on police and fire; (2) the regressive nature of the proposed garbage fee; (3) concerns that shifting solid waste to the CUS will divert resources from wastewater system improvements under a federal mandate.</p>
+      <p><em>"Make the sale, Mayor Whitmire. Taxpayers deserve to know what they're buying."</em></p>
+    </div>
+
+    <div class="callout" style="margin-top: 24px;">
+      <strong>How the four sources converge.</strong> All four agree on the underlying mechanics: the budget closes the FY27 gap primarily by moving SWD onto the CUS and imposing a new 5% ROW fee, not by the high-profile $5 trash fee itself. All four flag the same structural unfinished business: police/fire OT, the federal water consent decree, the property tax cap question, and the long-term sufficiency of the new fee package. <strong>Where they disagree is on the verdict:</strong> King calls it a "reasonable stopgap"; the Editorial Board calls it a step forward that "stretches the truth" on structural reform; Mintz frames it as substantively stronger than critics admit but politically under-sold; Burns &amp; McDonnell, as a consultant, supplies the technical numbers all three opinion pieces cite.
+    </div>
+
+    <div class="action-tier" style="border-left: 4px solid var(--navy); margin-top: 32px;">
+      <h3><span class="tier-badge" style="background: var(--navy);">Mayor's office, on the record</span> Stephen David presentation to the Super Neighborhood Alliance (May 11, 2026)</h3>
+      <p style="font-size: 14px; color: var(--text-soft); margin-bottom: 10px;"><em>Stephen David (Mayor's Chief of Staff / Chief Operating Officer) gave the FY27 budget presentation to the Super Neighborhood Alliance on May 11, 2026 — one day before formal Council budget workshops began. The presentation includes the most concise public articulation of the administration's structural argument. Six slide photos captured at the meeting are summarized below; the audio transcript is the source for the verbal Q&amp;A.</em></p>
+      <h4>The case the administration is making</h4>
+      <p>David framed FY27 as <strong>"the largest fiscal structural change in decades"</strong> — the culmination of the EY assessment that Council passed in May 2024 and that completed in November 2024. Per the "Governing Milestones" slide, FY26 was the year of structural restructuring (hiring freeze, voluntary retirement program reducing headcount by 1,056 employees and $100M in annual salary, Jones/Watson drainage settlement at ~$500M/yr); FY27 is the year of implementation.</p>
+      <h4>Key figures David put on the record</h4>
+      <ul>
+        <li><strong>Do-nothing baseline GF gap:</strong> FY27 $209M → FY28 $334M → FY29 $382M → FY30 $447M. After the FY27 fee package: $8M → $92M → $102M → $150M. <strong>Fund balance percentage still falls to −1% by FY30 even with the plan.</strong></li>
+        <li><strong>Voluntary retirement:</strong> 1,056 employees accepted (32% of workforce was retirement-eligible vs. 8–10% industry standard). $100M in annual salary savings. 11% reduction in city liability. ~2,000 additional employees currently eligible.</li>
+        <li><strong>CUS surplus, restated:</strong> Ordinance requirement 60 days operating cash; cash policy 300 days; <strong>actual 550 days. Current CUS fund balance $1.3B</strong> (rising from ~$700M in 2016 to $1.5B+ in 2025 per the slide chart).</li>
+        <li><strong>ROW fee math:</strong> 5% of gross utility revenue = $104M new annual GF revenue. CenterPoint already pays ~$100M/yr in ROW fees to the City for gas/electric. AT&amp;T and Comcast also pay.</li>
+        <li><strong>The fee escalation schedule David disclosed verbally:</strong> $5/mo held through FY27; rises to $10/mo in FY29; then $5/yr increases until reaching $25 full cost recovery. Each future increase requires a Council vote.</li>
+        <li><strong>Solid Waste structural facts:</strong> ~$107M operating + $9M debt service; fleet average age 9–10 years vs. 7-year industry standard; 40–45 daily breakdowns (~25% of field fleet) vs. 5–10 in LA/Phoenix; transfer stations — only 2 of 5 operational (Southeast and Southwest); trucks north of I-10 driving 60–90 minutes to reach an operational station; 25 ft holes and exposed wiring at non-functional stations.</li>
+        <li><strong>The Sponsorship subsidy:</strong> ~50,000 households opted out, costing the City $4M–$6M/yr. Total potential service base: 450,000 (400K city + 50K HOA).</li>
+        <li><strong>Operational reform:</strong> Transitioning from paper routing to GPS / Google Maps; GPS now installed in all service and supervisor vehicles after disclosure that supervisors had been driving the 610 loop instead of into neighborhoods.</li>
+      </ul>
+      <h4>Two specific claims residents should track in FY27 line items</h4>
+      <p>(1) <em>"NOT deferring infrastructure obligations"</em> — the Mayor's own slide. The Baker Institute documents a $420M cumulative deferred shortfall on street and drainage capital, and Vice Mayor Pro Tem Peck cited $760M in deferred facility maintenance at the May 6 BFA hearing. Whether the FY27 budget actually reverses this trajectory or is merely <em>not adding new deferral</em> is verifiable by line item.</p>
+      <p>(2) <em>"Both align costs with service"</em> — the affirmative defense of the SWD fee and ROW fee. The cost-of-service alignment claim is correct for SWD; the ROW fee, as Pollard's BFA exchange documented, is structurally a redirection of accumulated CUS surplus rather than a true new revenue requirement.</p>
+      <h4>The audience's own question on the record</h4>
+      <p>Lindsay Williams (President, Super Neighborhood 64 and 88) asked specifically about <strong>safety equipment and pay for solid waste workers</strong> as part of the enterprise-fund transition. David's response framed the $5 fee as <em>"insufficient to fully compensate total operational costs"</em> but as enabling the city to <em>"identify waste and facilitate capital purchases via debt issuance."</em> The follow-up by the audience pushed on the CUS surplus being deployed for trash service rather than rate reduction — the same question Pollard pressed at BFA. The administration's answer in both venues: the CUS surplus is "bottom bucket" (operationally unencumbered, outside the rate study) and so is available without requiring a future rate increase.</p>
+      <p>Lisa Hunt (VP of Super Neighborhood 6488) called the $5 fee <strong>"regressive and insufficient based on existing city studies."</strong> David's response confirmed the Mayor's preference is an incremental $5 start over an immediate $20–$25 jump to mitigate "household shock."</p>
+    </div>
+
+    <div class="action-tier" style="border-left: 4px solid var(--red); margin-top: 16px;">
+      <h3><span class="tier-badge" style="background: var(--red);">Independent + government data</span> TIRZ source stack (Baker Institute + Texas Comptroller + City of Houston + HPM)</h3>
+      <p style="font-size: 14px; color: var(--text-soft); margin-bottom: 10px;"><em>Five distinct sources document the regressive distribution of Houston's TIRZ revenue. The data is not in serious dispute; the policy question is whether expiring TIRZs are extended or sunset.</em></p>
+      <h4>The dataset</h4>
+      <ul>
+        <li><strong>Texas Comptroller Ch. 311 TIRZ Annual Reports</strong> — primary government data source. Most recent Houston filing: 2022, filed Dec 2023. Houston had not yet submitted FY23 or FY24 reports at time of compilation.</li>
+        <li><strong>City of Houston FY2026 Adopted Budget Vol XII (Tax Increment Reinvestment Zones)</strong> — confirms 27 active TIRZs and reports the city's net-of-TIRZ taxable value at $282.7B.</li>
+        <li><strong>Baker Institute / Rice University (Nov 2024)</strong> — "Houston Tax Increment Reinvestment Zones Regressively Redistribute Property Tax Burden," authored at the Center for Public Finance (John Diamond, director).</li>
+        <li><strong>Houston Public Media coverage (Dec 3, 2024)</strong> — reporting on the Baker Institute study.</li>
+        <li><strong>Houston_TIRZ_Budgets.xlsx</strong> — aggregated workbook combining all five sources into a sortable view (28 TIRZs × 11 columns).</li>
+      </ul>
+      <h4>The Baker Institute headline finding</h4>
+      <p>Of $262.4M total 2022 property tax increment captured across all Houston TIRZs:</p>
+      <ul>
+        <li><strong>13 TIRZs above the city's median household income ($62,637) captured 71% ($184M).</strong></li>
+        <li>12 TIRZs below the city's median captured 29% ($75M).</li>
+        <li><strong>The 3 lowest-income TIRZs (Sunnyside, Leland Woods, Fifth Ward) captured 2% ($5M) — all in neighborhoods at 30%+ below city median.</strong></li>
+        <li>11 TIRZs had household incomes more than 50% higher than the city's median; three were more than double.</li>
+      </ul>
+      <blockquote style="border-left: 3px solid var(--orange); padding: 10px 16px; margin: 12px 0; background: var(--light-grey); font-style: italic; color: var(--text-soft);">
+        John Diamond, Director, Baker Institute Center for Public Finance: <strong>"When we vote for TIRZs, that is what we're voting for. We're voting for a pattern of expenditures which is very regressive."</strong> Diamond's diagnosis: <em>"The city's tax base is being cannibalized."</em>
+      </blockquote>
+      <h4>The expiration calendar — where the policy choice will land</h4>
+      <p>Several TIRZs are scheduled to terminate within 1–5 years. Each termination is a Council decision to either redirect that tax base back into the General Fund or re-extend the zone:</p>
+      <ul>
+        <li><strong>Eastside RDA (#6, East End / Second Ward) — terminates 2027.</strong></li>
+        <li><strong>Old Sixth Ward RDA (#13) — terminates 2028.</strong></li>
+        <li><strong>Memorial City RDA (#17) — terminates 2029.</strong></li>
+        <li>Southwest Houston (#20), Upper Kirby (#19), East Downtown (#15) — terminate 2040.</li>
+      </ul>
+      <h4>The October 2024 audit authorization</h4>
+      <p>After the Midtown TIRZ corruption scandal (subject of a federal investigation), City Council authorized audits of <em>all</em> Houston TIRZs in October 2024. The audits' findings have not yet been integrated into the FY27 budget conversation and represent unfinished business City Council should demand before approving the FY27 ordinance.</p>
+    </div>
+  </div>
+</section>
+
 <footer id="about">
   <div class="container">
     <h3>About this report</h3>
@@ -506,7 +702,34 @@ li { margin-bottom: 6px; line-height: 1.6; }
         <li>HPOU Contract Overview, HPFFA Settlement, EY Efficiency Study Final Report</li>
         <li>Mayor's Office press release on stormwater-for-blight allocation (Jan 7, 2026)</li>
         <li>Houston FY26, FY25, FY24, FY23 Budget Ordinances</li>
-        <li>Burns and McDonald Cost-of-Service Study (May 7, 2026)</li>
+        <li>Burns &amp; McDonnell <em>Solid Waste Cost of Service and Enterprise Fund Study</em> (May 4, 2026) — full technical study commissioned by the City</li>
+      </ul>
+    </details>
+    <details>
+      <summary>Houston Chronicle coverage (May 2026)</summary>
+      <ul class="source-list">
+        <li>Bill King, "The garbage fee got the headlines. Here's what really matters in Whitmire's budget." (Opinion // Outlook, May 8, 2026)</li>
+        <li>Houston Chronicle Editorial Board, "Good job Whitmire. No budget is perfect but this one stops the bleeding." (Editorial, May 10, 2026)</li>
+        <li>Evan Mintz, "Whitmire has a transformative budget. Why isn't he selling it to the public?" (Opinion // Outlook, May 11, 2026)</li>
+      </ul>
+    </details>
+    <details>
+      <summary>TIRZ source stack</summary>
+      <ul class="source-list">
+        <li>Texas Comptroller — Chapter 311 TIRZ Annual Reports (comptroller.texas.gov/economy/development/search-tools/ch311/)</li>
+        <li>City of Houston FY2026 Adopted Budget Vol XII — Tax Increment Reinvestment Zones (houstontx.gov/budget/26budadopt/XII_TAX.pdf)</li>
+        <li>Baker Institute / Rice University, "Houston Tax Increment Reinvestment Zones Regressively Redistribute Property Tax Burden" (John Diamond, Center for Public Finance, Nov 2024)</li>
+        <li>Houston Public Media, "Report: Houston TIRZ districts primarily benefit high-income areas" (Dec 3, 2024)</li>
+        <li>Bill King Blog, "Houston TIRZs: Taxing the Poor to Spend on the Rich"</li>
+        <li>Community Impact reporting on TIRZ audit authorization (Oct 2024)</li>
+        <li>Houston_TIRZ_Budgets.xlsx — aggregated dataset (28 TIRZs, 11 fields)</li>
+      </ul>
+    </details>
+    <details>
+      <summary>Super Neighborhood Alliance presentation (May 11, 2026)</summary>
+      <ul class="source-list">
+        <li>Stephen David (Mayor's COO) presentation deck — 6 slide photos: Lack of Revenue Diversity, Governing Milestones, What We Are NOT Doing, What We ARE Doing, Revised General Fund Outlook, Combined Utility System Financial Considerations</li>
+        <li>Full meeting transcript including Q&amp;A from Greg Sirges, Lisa Hunt, Lindsay Williams, Sylvia Orinves, Kim Rogers, and audience comments on littering enforcement and TIRZ sunsetting</li>
       </ul>
     </details>
     <details>
@@ -533,7 +756,7 @@ li { margin-bottom: 6px; line-height: 1.6; }
         <li>Bond Buyer reporting (multiple articles, 2024–2026)</li>
         <li>Houston Public Media, Houston Landing, Texas Scorecard, KHOU, ABC13, Click2Houston, Fox 26, Axios Houston, Houston Chronicle</li>
         <li>FEMA Public Assistance Program Delivery Guide; NOAA disaster cost data; Houston Disaster Recovery 2024 Action Plan; HUD CDBG-DR allocation documents</li>
-        <li>City of Houston BFA Committee hearing transcript, May 7, 2026</li>
+        <li>City of Houston BFA Committee hearing transcript, May 6, 2026</li>
       </ul>
     </details>
     <div class="footnote">
@@ -618,7 +841,21 @@ const concerns = [
       </ul>
       <h4>The peer-city comparison (Mayor's strongest argument)</h4>
       <p>Houston is the outlier among major Texas cities. Pasadena $34/mo, Pearland $23/mo, League City $22/mo. San Antonio, Dallas, Austin, Fort Worth, El Paso, and Arlington all use dedicated monthly fees.</p>
-      <h4>The hidden subsidy (May 7 BFA confirmation)</h4>
+      <h4>Burns &amp; McDonnell cost-of-service study (May 4, 2026)</h4>
+      <p>The City's own consultants set out a very different rate trajectory than the Mayor's "$5/mo" framing. Burns &amp; McDonnell's recommended residential rate is <strong>$24.72/mo plus a $2.56/mo Clean City Fee — $27.28/mo total at full cost of service today</strong>, rising to <strong>$39.16/mo by FY31</strong> under Option 1 ($35.10 residential + $4.06 CCF).</p>
+      <ul>
+        <li>Houston's full cost-of-service is still <em>lower than every peer city benchmarked</em>: Austin $64.10, LA $55.95, Dallas $39.73, Phoenix $36.59, San Antonio $30.75, Fort Worth $25.75.</li>
+        <li>The study identifies a <strong>$55M citywide infrastructure backlog</strong> (2023) and confirms current SWMD collection rates of <strong>85% residential garbage and 65% recycling/heavy trash</strong>, vs. an industry standard of 99%. Closing that gap requires <strong>114 additional weekly routes</strong>.</li>
+        <li><strong>34% of the SWD fleet is at or past its 7-year replacement age</strong>; the fleet's average age is 6.5 years.</li>
+        <li>The study recommends a Reduced Residential Rate (<strong>$2 less than the full rate</strong>) for elderly and low-income residents, modeled on the W.A.T.E.R. Fund. <em>Director Dubowski testified at the May 6 BFA hearing this is NOT contemplated for FY27.</em></li>
+        <li>The study confirms <strong>46,330 Sponsorship-program residents</strong> currently receive the $6/mo HOA reimbursement — the same subsidy the Mayor is preserving in FY27.</li>
+        <li>SWD operating costs are projected to grow from <strong>$160M (FY26) to $235M (FY30)</strong> excluding variable storm cleanup. The recommended Storm Debris Reserve target is $50M, with 20% drawdown assumed each year.</li>
+      </ul>
+      <p>The Chronicle Editorial Board (May 10): the mixed messaging is "exacerbated by the release of a city-commissioned study recommending an even larger number" than $25/mo. Whitmire's framing of the new fee as a temporary "administrative fee" is, in the Board's words, "political nonsense."</p>
+      <h4>Bill King's reframe — the fee is the <em>least</em> consequential piece (Chronicle, May 8, 2026)</h4>
+      <p>Bill King (Baker Institute fellow): the $24M trash fee is a sideshow. The real budget mechanics are the two ~$100M moves on the utility side — the new ROW fee on the utility (about $100M flowing <em>into</em> the General Fund) and shifting all of SWD's $117M expense <em>off</em> the General Fund onto the CUS. <em>"Adding a new revenue stream and eliminating a regular expense will not only help the budget this year, but also reduce the general fund deficits in future years — though not entirely eliminate them."</em></p>
+      <p>King also notes that Houston is <em>"simply too sprawling to run an effective garbage pickup system that serves only about 400,000 single-family homes"</em> and warns the fee will drive more households to private haulers — making the public system even less efficient.</p>
+      <h4>The hidden subsidy (May 6 BFA confirmation)</h4>
       <p>Mayor Pro Tem Castex Tatum asked Director Dubowski directly: "And will the $6 rebates still remain intact for people with private trash?" Director's verbatim response: <strong>"Yes, that's part of the plan."</strong></p>
       <p>The HOA trash subsidy is $6/household/month, paid to 47,000 participating households. <strong>$3.3M/year total, with 88% concentrated in Districts E and G — Houston's 2nd and 3rd highest median-income districts.</strong> Set in the 1980s, never adjusted for inflation. Mayor Sylvester Turner attempted to eliminate it ~2016 and failed politically.</p>
       <h4>Workforce reality (HPM, March 5, 2026)</h4>
@@ -648,7 +885,7 @@ const concerns = [
       <h4>What's misleading about the framing</h4>
       <p>A 5% fee on utility gross revenues doesn't track right-of-way usage; it tracks customer billing volume. It's structurally a tax on utility consumption.</p>
       <p>"Consistent with what other utilities already pay" oversimplifies. Houston does collect franchise fees from CenterPoint and AT&T, but at varying rates and structures, typically lower than 5% of gross revenues. The new ROW fee adds 5% on top of existing franchise fees — including on Houston Water & Sewer, meaning the City's own utility customers pay the fee back to the City via their water bills.</p>
-      <h4>The CUS surplus reveal (May 7 BFA hearing)</h4>
+      <h4>The CUS surplus reveal (May 6 BFA hearing)</h4>
       <p>Council Member Pollard pressed COO Stephen David. The Combined Utility System has:</p>
       <ul>
         <li>Cash on hand: <strong>550 days</strong> vs. 300-day policy minimum</li>
@@ -657,6 +894,10 @@ const concerns = [
       <p>Pollard: <em>"It's like having money in my own account today and saying, 'I don't want to use this. I'm going to go put it on credit or debt.'"</em></p>
       <p>Stephen David refused to claim there's no surplus — <em>"That analysis is done during a rate study, which we're in the middle of right now."</em> When pressed: <em>"No."</em></p>
       <p><strong>The Mayor's COO declined to claim there is no surplus capacity.</strong> The new ROW fee is a redirection of accumulated CUS surplus to the General Fund, not a true new revenue requirement.</p>
+      <h4>King's confirmation — and the warning that comes with it (Chronicle, May 8, 2026)</h4>
+      <p>Baker Institute fellow Bill King: <em>"The utility fund is flush — for now."</em> The CUS reached a <strong>$4.4B fund balance last year</strong>, with <strong>almost $2B in liquidity</strong>; the last three years saw $2.4B in capital improvements and ~$1B in bond debt reduction. King calls the proposal a <em>"reasonable stopgap"</em> — but he flags that the CUS faces significant long-term obligations: the leaking wastewater system, the EPA Clean Water Act consent decrees, and billions of gallons of freshwater lost annually to leaks. <em>"Slowly increasing the solid waste fee to $25 per month … would help ensure it doesn't become a significant drain on the utility fund — presuming that future city leaders approve those fee increases."</em></p>
+      <h4>Controller Hollins's water-money-for-trash objection (Editorial Board, May 10)</h4>
+      <p>The Chronicle Editorial Board quotes Controller Chris Hollins directly: <em>"Since the projects aren't getting done, there's more money in the account and now we're saying, 'Oh, well, since we don't have the ability to deploy this capital in a way that the city should, we're just going to spend it on trash but that's not what the money's in there for.'"</em> The Board itself notes Houston is under a <strong>$9 billion federal consent decree</strong> for water infrastructure repairs; the CUS surplus is <em>nominally</em> healthy but exists because deferred maintenance is being deferred further.</p>
       <h4>The regressivity issue</h4>
       <p>Lower-income households spend a larger share of income on utilities. A 5% utility fee hits a $30K/year household harder (as % of income) than a $300K/year household. Property taxes scale roughly with home value. <strong>By converting "property tax revenue we can't raise" into "utility fees we can raise," the Mayor is shifting tax burden from property owners to all households — especially renters</strong>, who pay utility fees directly but don't pay property tax directly.</p>
       <p><strong>Verdict.</strong> Most economically problematic piece of the FY27 package. Generates real revenue ($100M/yr) but does so via a regressive workaround to a voter-approved limit.</p>
@@ -686,6 +927,83 @@ const concerns = [
       <p>The Stormwater Fund stands at a record $166M this year — up from $100M last year and under $80M the year before. <strong>That growth is largely the direct result of the Jones/Watson lawsuit</strong> that forced the City to stop diverting drainage money. Now the Mayor is reallocating part of that increase. <strong>Northeast Action Collective and West Street Recovery</strong> are preparing legal challenges.</p>
       <p>Daena Jones (Northeast Action Collective): <em>"If it's not illegal, it surely is immoral. Because we are flooding and we're suffering."</em></p>
       <p><strong>Verdict.</strong> Contested between a defensible expansive reading and a probable Charter violation. The 9-7 vote and BFA Chair voting against tell you the legal question is genuinely uncertain. The substantive question for residents who flood: are these 343 buildings actually the highest-priority drainage investment for a fund that just had to be force-restored to voter-mandated levels by a lawsuit?</p>
+    `
+  },
+  {
+    num: 6,
+    title: "The property tax cap question",
+    verdict: "STRUCTURAL",
+    tagClass: "tag-skeptical",
+    summary: "$2.9B in cumulative property tax revenue forgone since 2015. $379M left on the table this year alone — more than enough to close the deficit without any new fees.",
+    detail: `
+      <h4>What the FY27 budget rollout actually revealed (Chronicle Editorial Board, May 10, 2026)</h4>
+      <p>At Finance Director Melissa Dubowski's May 6 BFA presentation, a single slide reframed the entire budget conversation. The city has cut its property tax rate by <strong>nearly 20% since first hitting the voter-approved revenue cap in 2015</strong>. The cumulative result: <strong>$2.9 billion in foregone property tax revenue</strong> over that period.</p>
+      <ul>
+        <li><strong>For FY27 alone, the revenue cap cost the city $379 million</strong> — Dubowski's own number, on the record at BFA.</li>
+        <li>$379M is <em>larger than the entire $130M FY27 fee package and the remaining baseline deficit combined</em>. It would have closed the deficit and left significant funds left over for reserves.</li>
+        <li>The cap limits annual property tax revenue growth to <strong>4.5% or (inflation + population growth), whichever is lower</strong>, per a 2004 ballot initiative.</li>
+      </ul>
+      <h4>The Editorial Board's challenge</h4>
+      <blockquote style="border-left: 3px solid var(--orange); padding: 10px 16px; margin: 12px 0; background: var(--light-grey); font-style: italic; color: var(--text-soft);">
+        "Calling out the revenue cap as a limitation is disingenuous. Houston has one of the lowest property tax rates of all major cities in Texas, but Whitmire is proposing to keep the tax rate flat for a third consecutive budget. His decision not to raise taxes last year forced the city to draw down $53 million from its savings to balance the budget. Even with new fees in this year's budget, the city will still have to spend its reserves."
+      </blockquote>
+      <p>The cap caps <em>growth</em>; it does not require the city to lower the rate. Houston has done both. By holding the rate flat for a third year while imposing $130M+ in regressive new fees, the Mayor is making a policy choice about <em>who</em> pays, not a forced choice about <em>whether</em> to raise revenue.</p>
+      <h4>What Pollard already asked at BFA (May 6)</h4>
+      <p>Council Member Pollard's "penny challenge" is the structural-honesty version of this concern: the FY27 budget collects <strong>$20M below</strong> the rate cap that is legally available right now under Prop 1/H. <em>"We can't say that it's a challenge for us and then at the same time don't meet the max of the cap."</em></p>
+      <h4>King's math on the limits of property tax alone (Chronicle, May 8)</h4>
+      <p>Bill King points out the inverse: closing the projected General Fund deficit <em>entirely</em> with property tax would require a <strong>17% rate increase this year and more than 50% over five years</strong>. Property tax is part of the fix, not the whole fix. But $20M of available revenue at the cap, plus a fair share from longer-term structural reforms (TIRZ revisit, METRO sales-tax allocation revisit, police/fire OT discipline), would meaningfully change the shape of the problem.</p>
+      <p><strong>Verdict.</strong> The Editorial Board's strongest critique. The Mayor's budget claim that the trash-fee package "corrects" Houston's structural budget problem <em>does not address</em> the largest single revenue lever already available to the City — and that lever is structurally <em>more</em> progressive than the regressive fee package being proposed in its place.</p>
+    `
+  },
+  {
+    num: 7,
+    title: "TIRZs: $262M/yr regressively redistributed",
+    verdict: "REGRESSIVE",
+    tagClass: "tag-regressive",
+    summary: "10 above-median TIRZs captured 77% of 2022 property tax increment ($202M). The 3 lowest-income TIRZs got 1.8% ($4.8M). The city's tax base is being cannibalized to subsidize wealthy neighborhoods.",
+    detail: `
+      <h4>What a TIRZ does, plainly</h4>
+      <p>A Tax Increment Reinvestment Zone (TIRZ) "freezes" the property tax base in a designated area at its formation-year value. Any property tax revenue generated <em>above</em> that frozen base — the "increment" — is rebated to the TIRZ board to spend on local infrastructure, instead of flowing into the City's General Fund. Houston has <strong>28 TIRZs</strong>, the highest concentration of any major Texas city, covering 65+ square miles.</p>
+      <h4>The 2022 numbers (most recent Texas Comptroller Ch. 311 filing)</h4>
+      <ul>
+        <li><strong>Total 2022 property tax increment across all TIRZs: $262.4M</strong> (City + HISD + HCC + Harris County combined). Bill King cites ~$200M as the City of Houston's share.</li>
+        <li><strong>Combined TIRZ fund balance: $546.8M</strong> at end of 2022.</li>
+        <li>Houston's <strong>net-of-TIRZ taxable value is $282.7B</strong>, per the FY26 adopted budget — meaning a meaningful slice of the tax base is being held outside General Fund reach.</li>
+      </ul>
+      <h4>The Baker Institute finding (Rice University, Nov 2024)</h4>
+      <p>Researchers at the Baker Institute's Center for Public Finance analyzed every Houston TIRZ against the city's $62,637 median household income. The pattern is unambiguous:</p>
+      <ul>
+        <li><strong>13 TIRZs above the city's median household income captured 71% ($184M)</strong> of the property taxes rebated to all Houston TIRZs.</li>
+        <li><strong>12 TIRZs below the city's median income captured 29% ($75M).</strong></li>
+        <li><strong>The 3 lowest-income TIRZs combined — Sunnyside, Leland Woods, and Fifth Ward — got just 2% ($5M)</strong>, all of which sit in neighborhoods at 30%+ below city median.</li>
+        <li>11 TIRZs had household incomes <em>more than 50% higher</em> than the city's median; three were more than double the city's median.</li>
+      </ul>
+      <blockquote style="border-left: 3px solid var(--orange); padding: 10px 16px; margin: 12px 0; background: var(--light-grey); font-style: italic; color: var(--text-soft);">
+        John Diamond, Director, Baker Institute Center for Public Finance: <strong>"When we vote for TIRZs, that is what we're voting for. We're voting for a pattern of expenditures which is very regressive."</strong> Diamond's diagnosis: <em>"The city's tax base is being cannibalized."</em>
+      </blockquote>
+      <h4>Where the money concentrated in 2022 (City of Houston data)</h4>
+      <p>Just six high-income TIRZs captured the majority of every dollar:</p>
+      <ul>
+        <li><strong>#16 Uptown Development Authority</strong> (Galleria/Post Oak): $58.3M — <strong>22.2% of all Houston TIRZ revenue, by itself.</strong> Largest TIRZ; ~$900M in lifetime spending; 36% of all TIRZ debt.</li>
+        <li>#2 Midtown RDA: $35.2M (subject to a 2024 corruption scandal that led City Council to authorize audits of all TIRZs).</li>
+        <li>#3 Main Street / Market Square (Downtown CBD): $29.7M.</li>
+        <li>#10 Lake Houston RDA (Kingwood): $19.8M.</li>
+        <li>#17 Memorial City RDA (west Houston): $17.4M.</li>
+        <li>#19 Upper Kirby RDA: $16.9M.</li>
+      </ul>
+      <p>By contrast: <strong>#18 Fifth Ward RDA captured $1.55M; #22 Leland Woods RDA, $272,103; #26 Sunnyside RDA, $0.</strong> Sunnyside's tax base — a historically Black, low-income neighborhood — generated no increment for its TIRZ in 2022, while Uptown alone captured $58.3M.</p>
+      <h4>What's queued up <em>right now</em> — the FY26 capital plans</h4>
+      <p>The pattern is not historical. In recent months Houston City Council has approved new five-year capital improvement plans for the high-income TIRZs at full velocity:</p>
+      <ul>
+        <li><strong>Upper Kirby TIRZ:</strong> $125M FY26–FY30 capital plan.</li>
+        <li><strong>Memorial Heights TIRZ:</strong> $128.4M FY26–FY30 capital plan.</li>
+      </ul>
+      <p>Two TIRZs in two of Houston's higher-income neighborhoods just had a combined <strong>$253M in five-year capital authorization</strong> approved while the City's General Fund stares at a $172M residual deficit in FY31.</p>
+      <h4>Why this matters specifically in the FY27 budget conversation</h4>
+      <p>Bill King's structural reform list in the May 8 Chronicle named TIRZs directly: the City gives away approximately <strong>$200M in property tax revenue annually to TIRZs that largely serve wealthy neighborhoods.</strong> The Editorial Board (May 10) accepted the Mayor's claim that the fee package gets "serious about the deficit," but TIRZ revenue dwarfs the entire FY27 fee package and is structurally <em>more</em> regressive than property tax. <strong>Several TIRZs are scheduled to expire in the near term:</strong> Old Sixth Ward (#13) in 2028, Memorial City (#17) in 2029, Eastside (#6) in 2027. Each expiration is a natural moment to redirect that tax base back to the General Fund rather than re-extend.</p>
+      <h4>The October 2024 audit authorization</h4>
+      <p>After the Midtown TIRZ corruption scandal (subject of ongoing federal investigation), City Council authorized audits of <em>all</em> Houston TIRZs in October 2024. The results of those audits should inform the FY27 budget conversation and have not yet been integrated into the public record.</p>
+      <p><strong>Verdict.</strong> The single largest structural opportunity in Houston's General Fund that the FY27 budget does not address. <em>If even half</em> of the FY28 Old Sixth Ward and FY29 Memorial City increments were redirected to General Fund, that's a multi-million-dollar recurring revenue stream — and it would not require raising the property tax rate by a penny.</p>
     `
   }
 ];
@@ -768,17 +1086,17 @@ new Chart(document.getElementById('chartOT'), {
   options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': $' + ctx.parsed.y + 'M' } } }, scales: { y: { title: { display: true, text: 'GF Overtime ($M)' } } } }
 });
 
-// Chart 4: Deficit projection
+// Chart 4: Deficit projection — Mayor's own "Revised General Fund Outlook" slide (May 11 SNA presentation)
 new Chart(document.getElementById('chartDeficit'), {
   type: 'bar',
   data: {
-    labels: ['FY26\nadopted', 'FY26\nMar 2026', 'FY27\nbaseline', 'FY28', 'FY29', 'FY30'],
+    labels: ['FY25', 'FY26', 'FY27', 'FY28', 'FY29', 'FY30'],
     datasets: [
-      { label: 'Closed by FY27 fee package', data: [0, 0, 130, 130, 130, 130], backgroundColor: GREEN },
-      { label: 'Remaining gap', data: [76, 174, 97, 160, 250, 333], backgroundColor: RED }
+      { label: 'Baseline (do-nothing) gap', data: [84, 157, 209, 334, 382, 447], backgroundColor: RED, order: 2 },
+      { label: 'Revised gap (after FY27 fee package)', data: [84, 157, 8, 92, 102, 150], backgroundColor: GREEN, order: 1 }
     ]
   },
-  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': $' + ctx.parsed.y + 'M' } } }, scales: { x: { stacked: true }, y: { stacked: true, title: { display: true, text: '$ millions' } } } }
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': $' + ctx.parsed.y + 'M' } } }, scales: { y: { title: { display: true, text: '$ millions (General Fund gap)' } } } }
 });
 
 // Chart 5: Service degradation
@@ -808,6 +1126,33 @@ new Chart(document.getElementById('chartGF'), {
   options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' }, tooltip: { callbacks: { label: ctx => ctx.label + ' ' + Math.round(ctx.parsed / 30.46 * 10) / 10 + '%' } } } }
 });
 
+// Chart 7: Revenue diversity (from Mayor's May 11 SNA slide)
+new Chart(document.getElementById('chartRevDiversity'), {
+  type: 'bar',
+  data: {
+    labels: ['San Antonio', 'Dallas', 'Austin', 'Fort Worth', 'El Paso', 'Houston'],
+    datasets: [
+      { label: 'Property tax rate ($/100)', data: [0.5416, 0.7047, 0.4776, 0.6725, 0.7624, 0.5192], backgroundColor: NAVY },
+      { label: 'Garbage fee equiv.',         data: [0.1185, 0,      0.0946, 0,      0,      0],      backgroundColor: ORANGE },
+      { label: 'Water transfer',             data: [0.0215, 0.0760, 0.0215, 0.0730, 0.0948, 0],      backgroundColor: '#5C8AA0' },
+      { label: 'Utility transfer',           data: [0.2651, 0.0500, 0.0526, 0.0241, 0.0369, 0],      backgroundColor: GREEN }
+    ]
+  },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10 } }, tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': $' + ctx.parsed.y.toFixed(4) } } }, scales: { x: { stacked: true }, y: { stacked: true, title: { display: true, text: 'Functional GF rate (per $100)' } } } }
+});
+
+// Chart 8: TIRZ revenue by neighborhood income tier
+new Chart(document.getElementById('chartTIRZ'), {
+  type: 'bar',
+  data: {
+    labels: ['Above-median income\n(10 TIRZs)', 'Mixed income\n(13 TIRZs)', 'Low-income / 30%+ below median\n(4 TIRZs)'],
+    datasets: [
+      { label: '2022 Property Tax Increment ($M)', data: [201.7, 55.9, 4.8], backgroundColor: [RED, ORANGE, GREEN] }
+    ]
+  },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => '$' + ctx.parsed.y + 'M (' + (ctx.parsed.y / 262.4 * 100).toFixed(1) + '% of total)' } } }, scales: { y: { title: { display: true, text: '$ millions / yr' } } } }
+});
+
 // ============================================================
 // PATTERN TABS
 // ============================================================
@@ -831,7 +1176,7 @@ document.querySelectorAll('nav.sticky button').forEach(btn => {
     }
   });
 });
-const sections = ['concerns', 'trajectory', 'patterns', 'hearing', 'calculator', 'workshops', 'action', 'about'];
+const sections = ['concerns', 'trajectory', 'patterns', 'hearing', 'calculator', 'workshops', 'action', 'sources', 'about'];
 window.addEventListener('scroll', () => {
   let current = 'concerns';
   sections.forEach(id => {
@@ -909,30 +1254,36 @@ calc();
 // ============================================================
 const questions = [
   { dept: 'HPW', text: "Per the Baker Institute, Public Works' own engineering estimate is $650M/year needed for street and drainage maintenance, and the City has consistently spent less than half. What is the FY27 actual total funding for street and drainage capital and maintenance, and what is the documented gap to PW's stated need?", source: 'Baker Institute deep dive (Oct 2023)' },
-  { dept: 'HPW', text: "$760M in deferred facility maintenance was acknowledged in last year's BFA discussion. What is the current backlog estimate, and what is the FY27 plan to address it?", source: 'May 7 BFA hearing — Vice Mayor Pro Tem Peck' },
+  { dept: 'HPW', text: "$760M in deferred facility maintenance was acknowledged in last year's BFA discussion. What is the current backlog estimate, and what is the FY27 plan to address it?", source: 'May 6 BFA hearing — Vice Mayor Pro Tem Peck' },
   { dept: 'HPW', text: 'Per Baker: "substantial freshwater losses" and "persistent low pressure as infrastructure fails." What is the current annual water loss in gallons, and what is the rate of water main break increase year-over-year?', source: 'Baker Institute deep dive' },
   { dept: 'HPW', text: 'Status of the EPA wastewater consent decree — what\'s the FY27 commitment and what milestones remain?', source: 'Federal court mandate' },
-  { dept: 'HPW', text: 'On the new ROW fee — Council Member Pollard\'s CUS surplus challenge: with 550 days cash on hand and 2.15x debt coverage, why are CUS rates not being reduced rather than redirected to the General Fund?', source: 'May 7 BFA hearing — Pollard / David exchange' },
+  { dept: 'HPW', text: 'On the new ROW fee — Council Member Pollard\'s CUS surplus challenge: with 550 days cash on hand and 2.15x debt coverage, why are CUS rates not being reduced rather than redirected to the General Fund?', source: 'May 6 BFA hearing — Pollard / David exchange' },
   { dept: 'HPW', text: 'On the East Plant: $4 billion projected, with $900M from Texas Water Development Board borrowing. What\'s the financing plan for the remaining $3.1B? Is any of it coming from the documented CUS surplus?', source: 'Public Works testimony' },
 
-  { dept: 'SWM', text: 'What portion of the $5/month fee goes to (a) SWD direct operations, (b) capital improvements (transfer stations, trucks), and (c) General Fund backfill? The Burns and McDonald study identified the administrative cost component at $7.57/month — what is the cost component for each operational category?', source: 'Burns and McDonald study, May 7, 2026' },
+  { dept: 'SWM', text: 'What portion of the $5/month fee goes to (a) SWD direct operations, (b) capital improvements (transfer stations, trucks), and (c) General Fund backfill? The Burns and McDonald study identified the administrative cost component at $7.57/month — what is the cost component for each operational category?', source: 'Burns and McDonald study, May 6, 2026' },
   { dept: 'SWM', text: 'Director Hassen testified the department needs 70 more trucks and 30 more staff. What\'s funded in FY27?', source: 'HPM, March 5, 2026' },
   { dept: 'SWM', text: 'Three of five transfer stations are non-functional: Neches Street, Sommermeyer, Central Street. What is the FY27 capital allocation for each, and projected return-to-service date?', source: 'Click2Houston, May 4, 2026' },
   { dept: 'SWM', text: 'What is the implementation timeline for the on-demand heavy trash pilot that was put "on hold until further notice" in March 2026?', source: 'HPM, March 5, 2026' },
-  { dept: 'SWM', text: 'The HOA subsidy of $6/household/month continues in FY27 per Director Dubowski\'s verbatim confirmation. What is the rationale for not means-testing or sunsetting this subsidy as part of the SWD restructure? Districts E and G receive 88% of this subsidy.', source: 'May 7 BFA hearing; Houston Landing analysis' },
-  { dept: 'SWM', text: 'Will the new fee include exemptions for seniors, disabled veterans, or low-income households? Director Dubowski stated this is NOT contemplated for FY27.', source: 'May 7 BFA hearing — CM Salinas\'s office question' },
+  { dept: 'SWM', text: 'The HOA subsidy of $6/household/month continues in FY27 per Director Dubowski\'s verbatim confirmation. What is the rationale for not means-testing or sunsetting this subsidy as part of the SWD restructure? Districts E and G receive 88% of this subsidy.', source: 'May 6 BFA hearing; Houston Landing analysis' },
+  { dept: 'SWM', text: 'Will the new fee include exemptions for seniors, disabled veterans, or low-income households? Director Dubowski stated this is NOT contemplated for FY27.', source: 'May 6 BFA hearing — CM Salinas\'s office question' },
 
   { dept: 'Mayor', text: 'On the $60K Mayor\'s podcast: what was the procurement process for the contract with Conflenti Media? Was a competitive bid solicited? What deliverables were specified?', source: 'HPM April 2026 ethics complaints filed' },
   { dept: 'Mayor', text: 'On the EY Efficiency Study findings: what specific recommendations were implemented vs. deferred? What were the documented cost savings of each?', source: 'EY Efficiency Study, partial release' },
   { dept: 'Mayor', text: 'On the Austin Street bike lane removal: what was the actual project cost, and on what budget line did it appear?', source: 'ABC13, April 2025; BikeHouston PIA request' },
 
-  { dept: 'Finance', text: 'Pollard\'s penny challenge: the proposed FY27 budget collects $20M below the property tax cap. What is the rationale for not collecting available revenue under the existing voter-approved cap before imposing $130M+ in new fees?', source: 'May 7 BFA hearing — Pollard' },
-  { dept: 'Finance', text: 'The $25 cap on the trash fee: Stephen David\'s verbal commitment was "during Whitmire\'s administration, absent a rate study." What guardrails will be written into the budget ordinance itself to make this binding?', source: 'May 7 BFA hearing — Thomas / David' },
+  { dept: 'Finance', text: 'Pollard\'s penny challenge: the proposed FY27 budget collects $20M below the property tax cap. What is the rationale for not collecting available revenue under the existing voter-approved cap before imposing $130M+ in new fees?', source: 'May 6 BFA hearing — Pollard' },
+  { dept: 'Finance', text: 'The $25 cap on the trash fee: Stephen David\'s verbal commitment was "during Whitmire\'s administration, absent a rate study." What guardrails will be written into the budget ordinance itself to make this binding?', source: 'May 6 BFA hearing — Thomas / David' },
   { dept: 'Finance', text: 'The five-year forecast shows recurring deficits of $290M, $380M, and $463M in FY28–FY30. What is the structural plan to close those gaps, and which revenue or expenditure changes are assumed in the forecast that are not yet adopted?', source: 'BFA Chair Sallie Alcorn floor statement' },
   { dept: 'Finance', text: 'Pension corridor compliance: is the FY27 contribution to HMEPS, HPOPS, and HFRRF within the SB 2190 corridor for each fund individually? What is the actuarially required contribution, and what is the proposed contribution?', source: 'Hollins Ten Hard Truth #8' },
   { dept: 'Finance', text: 'TIRZ reform: with 27 active TIRZs and several scheduled to terminate within 5–10 years (Eastside FY27, Old Sixth Ward FY28, Memorial City FY29), what is the City\'s plan to convert terminated-TIRZ tax base back to General Fund revenue?', source: 'Baker Institute; FY27 XII_TAX appendix' },
 
-  { dept: 'QoL', text: 'Public testimony at the May 7 hearing identified a 16% reduction in the Quality of Life budget category for FY27. What specific service-level commitments are being reduced or eliminated, and which neighborhoods are most affected?', source: 'May 7 BFA hearing — Felix Kapoor public testimony' },
+  { dept: 'TIRZ', text: 'Per the Baker Institute (Nov 2024), 10 above-median-income TIRZs captured 77% of 2022 property tax increment ($202M of $262M total). The 3 lowest-income TIRZs (Sunnyside, Leland Woods, Fifth Ward) got 1.8% ($5M). What is the administration\'s position on this distribution, and what would it take to make TIRZ revenue distribution match neighborhood need?', source: 'Baker Institute Center for Public Finance (Diamond), Nov 2024' },
+  { dept: 'TIRZ', text: 'Per the FY26 adopted budget Vol XII, Houston\'s net-of-TIRZ taxable value is $282.7B. What is the projected revenue if the 3 TIRZs scheduled to terminate FY27–FY29 (Eastside, Old Sixth Ward, Memorial City) are NOT extended? Is any portion of that revenue already assumed in the FY27 five-year forecast?', source: 'City of Houston FY26 Adopted Budget XII_TAX' },
+  { dept: 'TIRZ', text: 'In October 2024, City Council authorized audits of ALL Houston TIRZs after the Midtown corruption scandal. What is the status of those audits? Will their findings be available before the June 3 FY27 budget vote?', source: 'Community Impact reporting; HPM coverage' },
+  { dept: 'TIRZ', text: 'Upper Kirby TIRZ approved a $125M FY26–FY30 capital plan. Memorial Heights TIRZ approved $128.4M. Both are above-median-income TIRZs. What is the FY26–FY30 capital plan for Fifth Ward TIRZ, Sunnyside TIRZ, and Leland Woods TIRZ — the 3 below-median-income TIRZs that captured 1.8% of 2022 increment?', source: 'Community Impact; Baker Institute' },
+  { dept: 'TIRZ', text: 'Uptown Development Authority (TIRZ #16) alone captured $58.3M in 2022 — 22.2% of all Houston TIRZ revenue. Lifetime spending ~$900M; 36% of all TIRZ debt. What is the Mayor\'s position on capping individual-TIRZ revenue concentration?', source: 'Texas Comptroller Ch. 311 + King public-finance writing' },
+
+  { dept: 'QoL', text: 'Public testimony at the May 6 hearing identified a 16% reduction in the Quality of Life budget category for FY27. What specific service-level commitments are being reduced or eliminated, and which neighborhoods are most affected?', source: 'May 6 BFA hearing — Felix Kapoor public testimony' },
   { dept: 'QoL', text: 'Of the ~700 unfilled positions citywide, how many are in each of these departments, and what services are not being delivered as a result?', source: 'HPM voluntary retirement reporting' },
   { dept: 'QoL', text: 'On the "Let\'s Play Houston" public-private partnership: what oversight mechanisms exist for the $60M private foundation funding, and what city control is preserved over partnership-funded park improvements?', source: 'Community Impact reporting' }
 ];
@@ -945,7 +1296,7 @@ function renderQuestions(filter = 'all') {
     list.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-soft);">No questions for this filter.</div>';
     return;
   }
-  const deptNames = { HPW: 'Public Works', SWM: 'Solid Waste', Mayor: "Mayor's Office", Finance: 'Finance', QoL: 'Health/Library/Parks' };
+  const deptNames = { HPW: 'Public Works', SWM: 'Solid Waste', Mayor: "Mayor's Office", Finance: 'Finance', TIRZ: 'TIRZ', QoL: 'Health/Library/Parks' };
   filtered.forEach(q => {
     const item = document.createElement('div');
     item.className = 'q-item';
